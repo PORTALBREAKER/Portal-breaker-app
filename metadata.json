@@ -1,0 +1,6 @@
+{
+  "name": "Portal Breaker",
+  "description": "Immersive novel reader and creator studio for Portal Breaker with glassmorphic styling and customizable typography",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:aapt="http://schemas.android.com/aapt"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+
+    <!-- Stylized "P" Letter Body -->
+    <!-- Vertical stem -->
+    <path
+        android:pathData="M35,28 L47,28 L47,80 L35,80 Z"
+        android:strokeWidth="1.5"
+        android:strokeColor="#00F5D4">
+        <aapt:attr name="android:fillColor">
+            <gradient
+                android:startX="35"
+                android:startY="28"
+                android:endX="47"
+                android:endY="80"
+                android:type="linear">
+                <item android:offset="0.0" android:color="#FFFFFF" />
+                <item android:offset="1.0" android:color="#CBD5E1" />
+            </gradient>
+        </aapt:attr>
+    </path>
+
+    <!-- Upper loop of P -->
+    <path
+        android:pathData="M44,28 L64,28 C76,28 76,54 64,54 L44,54 Z"
+        android:strokeWidth="1.5"
+        android:strokeColor="#00F5D4">
+        <aapt:attr name="android:fillColor">
+            <gradient
+                android:startX="44"
+                android:startY="28"
+                android:endX="76"
+                android:endY="54"
+                android:type="linear">
+                <item android:offset="0.0" android:color="#FFFFFF" />
+                <item android:offset="1.0" android:color="#94A3B8" />
+            </gradient>
+        </aapt:attr>
+    </path>
+
+    <!-- Negative space cutout inside P loop -->
+    <path
+        android:pathData="M47,36 L62,36 C69,36 69,46 62,46 L47,46 Z"
+        android:fillColor="#090D18" />
+
+    <!-- Electric Thunderbolt slicing across the P (⚡) -->
+    <!-- Outer Glow -->
+    <path
+        android:pathData="M69,20 L47,52 L59,52 L39,88 L53,56 L43,56 Z"
+        android:strokeWidth="3"
+        android:strokeColor="#4000F5D4"
+        android:strokeLineJoin="miter" />
+
+    <!-- Thunderbolt Core -->
+    <path
+        android:pathData="M69,20 L47,52 L59,52 L39,88 L53,56 L43,56 Z"
+        android:strokeWidth="1"
+        android:strokeColor="#00F5D4">
+        <aapt:attr name="android:fillColor">
+            <gradient
+                android:startX="69"
+                android:startY="20"
+                android:endX="39"
+                android:endY="88"
+                android:type="linear">
+                <item android:offset="0.0" android:color="#FFF275" />
+                <item android:offset="0.5" android:color="#FBBF24" />
+                <item android:offset="1.0" android:color="#00F5D4" />
+            </gradient>
+        </aapt:attr>
+    </path>
+</vector>
+
+
