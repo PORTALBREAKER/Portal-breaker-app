@@ -22,29 +22,54 @@ jobs:
     - name: Setup Gradle
       uses: gradle/actions/setup-gradle@v3
 
-    - name: Prepare build environment and keys
+    - name: Prepare build environment and keystores
       run: |
-        # 1. Restore debug.keystore in root and app directory if missing
+        # Ensure debug.keystore exists in every expected location:
+        # 1. Root folder
+        # 2. app/ folder
+        # 3. Default Android user home folder (~/.android/debug.keystore)
+        
+        mkdir -p ~/.android
+        mkdir -p app
+
         if [ -f "debug.keystore.base64" ]; then
           base64 -d debug.keystore.base64 > debug.keystore
-          mkdir -p app
-          base64 -d debug.keystore.base64 > app/debug.keystore
-          echo "debug.keystore successfully placed in both root and app folders."
+          cp debug.keystore app/debug.keystore
+          cp debug.keystore ~/.android/debug.keystore
+        elif [ -f "app/debug.keystore.base64" ]; then
+          base64 -d app/debug.keystore.base64 > debug.keystore
+          cp debug.keystore app/debug.keystore
+          cp debug.keystore ~/.android/debug.keystore
+        else
+          # Fallback generate a fresh debug keystore if ever missing
+          keytool -genkey -v -keystore debug.keystore -storepass android -alias androiddebugkey -keypass android -keyalg RSA -keysize 2048 -validity 10000 -dname "CN=Android Debug,O=Android,C=US"
+          cp debug.keystore app/debug.keystore
+          cp debug.keystore ~/.android/debug.keystore
         fi
         
-        # 2. Ensure empty .env exists
-        touch .env
+        echo "Keystore verified at:"
+        ls -la debug.keystore app/debug.keystore ~/.android/debug.keystore
 
-        # 3. Grant execute permissions
+        # Ensure empty .env exists for secrets plugin
+        touch .env
+        touch app/.env
+
+        # Ensure gradlew has executable permission
         chmod +x gradlew
 
     - name: Build APK with Gradle
       env:
         ANDROID_HOME: /usr/local/lib/android/sdk
-      run: ./gradlew assembleDebug --no-daemon -Djava.awt.headless=true -Pksp.useKSP2=true
+      run: |
+        ./gradlew assembleDebug \
+          --no-daemon \
+          --no-configuration-cache \
+          -Djava.awt.headless=true \
+          -Pksp.useKSP2=true
 
     - name: Upload APK artifact
       uses: actions/upload-artifact@v4
       with:
         name: PortalBreaker-APK
         path: app/build/outputs/apk/debug/*.apk
+        if-no-files-found: error
