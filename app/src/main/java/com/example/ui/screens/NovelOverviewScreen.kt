@@ -1878,6 +1878,8 @@ fun CloudSyncDialog(
                                 if (success) {
                                     infoMessage = "Account created successfully!"
                                     errorMessage = null
+                                    passwordInput = ""
+                                    confirmPasswordInput = ""
                                 } else {
                                     errorMessage = err ?: "Account creation failed."
                                 }
@@ -1887,6 +1889,7 @@ fun CloudSyncDialog(
                                 if (success) {
                                     infoMessage = "Signed in successfully!"
                                     errorMessage = null
+                                    passwordInput = ""
                                 } else {
                                     errorMessage = err ?: "Sign in failed."
                                 }
