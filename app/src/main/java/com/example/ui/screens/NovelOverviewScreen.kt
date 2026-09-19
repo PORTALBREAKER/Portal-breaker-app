@@ -13,6 +13,7 @@ import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -26,6 +27,9 @@ import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
+import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
@@ -181,85 +185,105 @@ fun NovelOverviewScreen(
                 .statusBarsPadding()
         ) {
             // Top Navigation Bar
-            Row(
+            BoxWithConstraints(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(horizontal = 20.dp, vertical = 8.dp),
-                horizontalArrangement = Arrangement.SpaceBetween,
-                verticalAlignment = Alignment.CenterVertically
+                    .padding(horizontal = 16.dp, vertical = 6.dp)
             ) {
-                // App Emblem & Title (Secret 4-tap trigger on the P-Thunderbolt logo only)
+                val isCompact = maxWidth < 380.dp
+
                 Row(
-                    verticalAlignment = Alignment.CenterVertically,
-                    modifier = Modifier.padding(horizontal = 4.dp, vertical = 4.dp)
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    verticalAlignment = Alignment.CenterVertically
                 ) {
-                    PortalThunderboltLogo(
-                        size = 40.dp,
-                        onClick = {
-                            val now = System.currentTimeMillis()
-                            if (now - lastTapTimestamp < 1500L) {
-                                secretTapCount++
-                            } else {
-                                secretTapCount = 1
-                            }
-                            lastTapTimestamp = now
-
-                            if (secretTapCount >= 4) {
-                                secretTapCount = 0
-                                onSecretTrickTriggered()
-                            }
-                        },
-                        modifier = Modifier.testTag("secret_portal_thunderbolt_logo")
-                    )
-                    Spacer(modifier = Modifier.width(12.dp))
-                    Column {
-                        Text(
-                            text = "PORTAL BREAKER",
-                            style = MaterialTheme.typography.titleMedium.copy(
-                                fontWeight = FontWeight.Black,
-                                letterSpacing = 1.5.sp,
-                                color = Color.White
-                            )
-                        )
-                        Text(
-                            text = "Official Webnovel Edition",
-                            style = MaterialTheme.typography.labelSmall.copy(color = PortalSky)
-                        )
-                    }
-                }
-
-                // Action Icons (Cloud Sync + Reading Settings)
-                Row(verticalAlignment = Alignment.CenterVertically) {
-                    // Cloud Sync Account Button
-                    IconButton(
-                        onClick = { showCloudDialog = true },
-                        modifier = Modifier.testTag("open_cloud_sync_button")
+                    // App Emblem & Title (Secret 4-tap trigger on the P-Thunderbolt logo only)
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically,
+                        modifier = Modifier
+                            .weight(1f, fill = false)
+                            .padding(vertical = 4.dp)
                     ) {
-                        if (isCloudSyncing) {
-                            CircularProgressIndicator(
-                                modifier = Modifier.size(18.dp),
-                                color = PortalCyan,
-                                strokeWidth = 2.dp
+                        PortalThunderboltLogo(
+                            size = if (isCompact) 36.dp else 40.dp,
+                            onClick = {
+                                val now = System.currentTimeMillis()
+                                if (now - lastTapTimestamp < 1500L) {
+                                    secretTapCount++
+                                } else {
+                                    secretTapCount = 1
+                                }
+                                lastTapTimestamp = now
+
+                                if (secretTapCount >= 4) {
+                                    secretTapCount = 0
+                                    onSecretTrickTriggered()
+                                }
+                            },
+                            modifier = Modifier.testTag("secret_portal_thunderbolt_logo")
+                        )
+                        Spacer(modifier = Modifier.width(if (isCompact) 8.dp else 12.dp))
+                        Column {
+                            Text(
+                                text = "PORTAL BREAKER",
+                                style = (if (isCompact) MaterialTheme.typography.titleSmall else MaterialTheme.typography.titleMedium).copy(
+                                    fontWeight = FontWeight.Black,
+                                    letterSpacing = if (isCompact) 1.sp else 1.5.sp,
+                                    color = Color.White
+                                ),
+                                maxLines = 1,
+                                overflow = TextOverflow.Ellipsis
                             )
-                        } else {
-                            Icon(
-                                imageVector = if (currentUserId.isNotBlank()) Icons.Default.CloudDone else Icons.Default.CloudQueue,
-                                contentDescription = "Cloud Sync",
-                                tint = if (currentUserId.isNotBlank()) PortalCyan else Color.Gray
+                            Text(
+                                text = "Official Webnovel Edition",
+                                style = MaterialTheme.typography.labelSmall.copy(
+                                    color = PortalSky,
+                                    fontSize = if (isCompact) 10.sp else 11.sp
+                                ),
+                                maxLines = 1,
+                                overflow = TextOverflow.Ellipsis
                             )
                         }
                     }
 
-                    // Reading Settings Button
-                    IconButton(
-                        onClick = onOpenSettings,
-                        modifier = Modifier.testTag("open_settings_button")
+                    // Action Icons (Cloud Sync + Reading Settings)
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.End
                     ) {
-                        Icon(
-                            imageVector = Icons.Default.TextFields,
-                            contentDescription = "Reading Settings",
-                            tint = PortalCyan
-                        )
+                        // Cloud Sync Account Button
+                        IconButton(
+                            onClick = { showCloudDialog = true },
+                            modifier = Modifier.size(if (isCompact) 38.dp else 44.dp).testTag("open_cloud_sync_button")
+                        ) {
+                            if (isCloudSyncing) {
+                                CircularProgressIndicator(
+                                    modifier = Modifier.size(18.dp),
+                                    color = PortalCyan,
+                                    strokeWidth = 2.dp
+                                )
+                            } else {
+                                Icon(
+                                    imageVector = if (currentUserId.isNotBlank()) Icons.Default.CloudDone else Icons.Default.CloudQueue,
+                                    contentDescription = "Cloud Sync",
+                                    tint = if (currentUserId.isNotBlank()) PortalCyan else Color.Gray,
+                                    modifier = Modifier.size(if (isCompact) 20.dp else 24.dp)
+                                )
+                            }
+                        }
+
+                        // Reading Settings Button
+                        IconButton(
+                            onClick = onOpenSettings,
+                            modifier = Modifier.size(if (isCompact) 38.dp else 44.dp).testTag("open_settings_button")
+                        ) {
+                            Icon(
+                                imageVector = Icons.Default.TextFields,
+                                contentDescription = "Reading Settings",
+                                tint = PortalCyan,
+                                modifier = Modifier.size(if (isCompact) 20.dp else 24.dp)
+                            )
+                        }
                     }
                 }
             }
@@ -270,7 +294,7 @@ fun NovelOverviewScreen(
                 enter = fadeIn() + expandVertically(),
                 exit = fadeOut() + shrinkVertically()
             ) {
-                Box(
+                BoxWithConstraints(
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(horizontal = 16.dp, vertical = 6.dp)
@@ -280,96 +304,105 @@ fun NovelOverviewScreen(
                             borderColor = PortalCyan,
                             secondaryBorderColor = PortalPurple
                         )
-                        .padding(horizontal = 16.dp, vertical = 10.dp)
+                        .padding(horizontal = 14.dp, vertical = 10.dp)
                 ) {
-                    Row(
+                    val isSmall = maxWidth < 380.dp
+
+                    Column(
                         modifier = Modifier.fillMaxWidth(),
-                        horizontalArrangement = Arrangement.SpaceBetween,
-                        verticalAlignment = Alignment.CenterVertically
+                        verticalArrangement = Arrangement.spacedBy(8.dp)
                     ) {
                         Row(
-                            verticalAlignment = Alignment.CenterVertically,
-                            modifier = Modifier.weight(1f)
+                            modifier = Modifier.fillMaxWidth(),
+                            horizontalArrangement = Arrangement.SpaceBetween,
+                            verticalAlignment = Alignment.CenterVertically
                         ) {
-                            Icon(
-                                imageVector = Icons.Default.LockOpen,
-                                contentDescription = null,
-                                tint = PortalCyan,
-                                modifier = Modifier.size(20.dp)
-                            )
-                            Spacer(modifier = Modifier.width(8.dp))
-                            Column {
-                                Text(
-                                    text = "AUTHOR SANCTUARY ACTIVE",
-                                    style = MaterialTheme.typography.labelSmall.copy(
-                                        color = PortalCyan,
-                                        fontWeight = FontWeight.Bold,
-                                        letterSpacing = 1.sp
-                                    )
+                            Row(
+                                verticalAlignment = Alignment.CenterVertically,
+                                modifier = Modifier.weight(1f)
+                            ) {
+                                Icon(
+                                    imageVector = Icons.Default.LockOpen,
+                                    contentDescription = null,
+                                    tint = PortalCyan,
+                                    modifier = Modifier.size(18.dp)
                                 )
-                                Row(verticalAlignment = Alignment.CenterVertically) {
+                                Spacer(modifier = Modifier.width(8.dp))
+                                Column {
                                     Text(
-                                        text = "Author Arun",
-                                        style = MaterialTheme.typography.bodySmall.copy(color = Color.White)
+                                        text = "AUTHOR SANCTUARY",
+                                        style = MaterialTheme.typography.labelSmall.copy(
+                                            color = PortalCyan,
+                                            fontWeight = FontWeight.Bold,
+                                            letterSpacing = 1.sp
+                                        )
                                     )
-                                    Spacer(modifier = Modifier.width(6.dp))
-                                    Box(
-                                        modifier = Modifier
-                                            .clip(RoundedCornerShape(4.dp))
-                                            .background(PortalCyan.copy(alpha = 0.2f))
-                                            .padding(horizontal = 5.dp, vertical = 2.dp)
-                                    ) {
-                                        Row(verticalAlignment = Alignment.CenterVertically) {
-                                            Icon(
-                                                imageVector = Icons.Default.CloudDone,
-                                                contentDescription = null,
-                                                tint = PortalCyan,
-                                                modifier = Modifier.size(12.dp)
-                                            )
-                                            Spacer(modifier = Modifier.width(3.dp))
-                                            Text(
-                                                text = "Worldwide Cloud Sync",
-                                                style = MaterialTheme.typography.labelSmall.copy(
-                                                    color = PortalCyan,
-                                                    fontSize = 9.sp,
-                                                    fontWeight = FontWeight.Bold
+                                    Row(verticalAlignment = Alignment.CenterVertically) {
+                                        Text(
+                                            text = "Author Arun",
+                                            style = MaterialTheme.typography.bodySmall.copy(color = Color.White)
+                                        )
+                                        Spacer(modifier = Modifier.width(6.dp))
+                                        Box(
+                                            modifier = Modifier
+                                                .clip(RoundedCornerShape(4.dp))
+                                                .background(PortalCyan.copy(alpha = 0.2f))
+                                                .padding(horizontal = 5.dp, vertical = 2.dp)
+                                        ) {
+                                            Row(verticalAlignment = Alignment.CenterVertically) {
+                                                Icon(
+                                                    imageVector = Icons.Default.CloudDone,
+                                                    contentDescription = null,
+                                                    tint = PortalCyan,
+                                                    modifier = Modifier.size(11.dp)
                                                 )
-                                            )
+                                                Spacer(modifier = Modifier.width(3.dp))
+                                                Text(
+                                                    text = "Cloud Sync",
+                                                    style = MaterialTheme.typography.labelSmall.copy(
+                                                        color = PortalCyan,
+                                                        fontSize = 9.sp,
+                                                        fontWeight = FontWeight.Bold
+                                                    )
+                                                )
+                                            }
                                         }
                                     }
                                 }
                             }
-                        }
 
-                        Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                            // Secret Inscribe Chapter Button
-                            Button(
-                                onClick = onOpenInscribeNew,
-                                colors = ButtonDefaults.buttonColors(
-                                    containerColor = PortalCyan,
-                                    contentColor = VoidDark
-                                ),
-                                shape = RoundedCornerShape(10.dp),
-                                modifier = Modifier.testTag("author_inscribe_chapter_button")
-                            ) {
-                                Icon(
-                                    imageVector = Icons.Default.Add,
-                                    contentDescription = null,
-                                    modifier = Modifier.size(16.dp)
-                                )
-                                Spacer(modifier = Modifier.width(4.dp))
-                                Text(
-                                    text = "Inscribe Chapter",
-                                    style = MaterialTheme.typography.labelMedium.copy(fontWeight = FontWeight.Bold)
-                                )
-                            }
+                            Row(horizontalArrangement = Arrangement.spacedBy(6.dp)) {
+                                // Secret Inscribe Chapter Button
+                                Button(
+                                    onClick = onOpenInscribeNew,
+                                    colors = ButtonDefaults.buttonColors(
+                                        containerColor = PortalCyan,
+                                        contentColor = VoidDark
+                                    ),
+                                    shape = RoundedCornerShape(10.dp),
+                                    contentPadding = androidx.compose.foundation.layout.PaddingValues(horizontal = 10.dp, vertical = 6.dp),
+                                    modifier = Modifier.testTag("author_inscribe_chapter_button")
+                                ) {
+                                    Icon(
+                                        imageVector = Icons.Default.Add,
+                                        contentDescription = null,
+                                        modifier = Modifier.size(15.dp)
+                                    )
+                                    Spacer(modifier = Modifier.width(4.dp))
+                                    Text(
+                                        text = if (isSmall) "Inscribe" else "Inscribe Chapter",
+                                        style = MaterialTheme.typography.labelMedium.copy(fontWeight = FontWeight.Bold)
+                                    )
+                                }
 
-                            // Exit Author Mode Button
-                            OutlinedButton(
-                                onClick = onExitAuthorMode,
-                                shape = RoundedCornerShape(10.dp)
-                            ) {
-                                Text("Exit", color = Color.LightGray, style = MaterialTheme.typography.labelSmall)
+                                // Exit Author Mode Button
+                                OutlinedButton(
+                                    onClick = onExitAuthorMode,
+                                    shape = RoundedCornerShape(10.dp),
+                                    contentPadding = androidx.compose.foundation.layout.PaddingValues(horizontal = 8.dp, vertical = 6.dp)
+                                ) {
+                                    Text("Exit", color = Color.LightGray, style = MaterialTheme.typography.labelSmall)
+                                }
                             }
                         }
                     }
@@ -632,7 +665,7 @@ private fun HomeTabContent(
         // Hero Novel Showcase Card
         item {
             Spacer(modifier = Modifier.height(10.dp))
-            Box(
+            BoxWithConstraints(
                 modifier = Modifier
                     .fillMaxWidth()
                     .glassmorphic(
@@ -640,24 +673,28 @@ private fun HomeTabContent(
                         backgroundColor = VoidSurface.copy(alpha = 0.85f),
                         borderColor = PortalCyan.copy(alpha = 0.35f)
                     )
-                    .padding(18.dp)
+                    .padding(16.dp)
             ) {
+                val isCompactScreen = maxWidth < 380.dp
+                val coverWidth = if (isCompactScreen) 95.dp else 115.dp
+                val coverHeight = if (isCompactScreen) 138.dp else 165.dp
+
                 Row(
                     modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.spacedBy(16.dp)
+                    horizontalArrangement = Arrangement.spacedBy(if (isCompactScreen) 12.dp else 16.dp)
                 ) {
                     // 3:4 Procedural Cover Card
                     NovelCoverCard(
                         modifier = Modifier
-                            .width(115.dp)
-                            .height(165.dp)
+                            .width(coverWidth)
+                            .height(coverHeight)
                     )
 
                     // Novel Details & Metadata
                     Column(modifier = Modifier.weight(1f)) {
                         Text(
                             text = "PORTAL BREAKER",
-                            style = MaterialTheme.typography.titleLarge.copy(
+                            style = (if (isCompactScreen) MaterialTheme.typography.titleMedium else MaterialTheme.typography.titleLarge).copy(
                                 color = Color.White,
                                 fontWeight = FontWeight.Black,
                                 letterSpacing = 1.sp
@@ -671,11 +708,11 @@ private fun HomeTabContent(
                             )
                         )
 
-                        Spacer(modifier = Modifier.height(8.dp))
+                        Spacer(modifier = Modifier.height(6.dp))
 
                         // Genre Tags
                         Row(
-                            horizontalArrangement = Arrangement.spacedBy(6.dp)
+                            horizontalArrangement = Arrangement.spacedBy(4.dp)
                         ) {
                             listOf("Dark Fantasy", "LitRPG", "Sci-Fi").forEach { tag ->
                                 Box(
@@ -687,43 +724,46 @@ private fun HomeTabContent(
                                             borderWidth = 0.5.dp
                                         )
                                         .padding(horizontal = 6.dp, vertical = 2.dp)
-                                ) {
-                                    Text(
-                                        text = tag,
-                                        style = MaterialTheme.typography.labelSmall.copy(
-                                            color = Color.LightGray,
-                                            fontSize = 10.sp
+                                    ) {
+                                        Text(
+                                            text = tag,
+                                            style = MaterialTheme.typography.labelSmall.copy(
+                                                color = Color.LightGray,
+                                                fontSize = if (isCompactScreen) 9.sp else 10.sp
+                                            )
                                         )
-                                    )
-                                }
+                                    }
                             }
                         }
 
-                        Spacer(modifier = Modifier.height(8.dp))
+                        Spacer(modifier = Modifier.height(6.dp))
 
                         Text(
                             text = "Original Webnovel Publication by Author Arun",
                             style = MaterialTheme.typography.bodySmall.copy(
                                 color = Color(0xFFA0AEC0),
+                                fontSize = if (isCompactScreen) 11.sp else 12.sp,
                                 letterSpacing = 0.3.sp
-                            )
+                            ),
+                            maxLines = 2,
+                            overflow = TextOverflow.Ellipsis
                         )
 
-                        Spacer(modifier = Modifier.height(10.dp))
+                        Spacer(modifier = Modifier.height(8.dp))
 
                         // Novel Stats Pill
                         Row(
-                            horizontalArrangement = Arrangement.spacedBy(12.dp),
+                            horizontalArrangement = Arrangement.spacedBy(8.dp),
                             verticalAlignment = Alignment.CenterVertically
                         ) {
                             Text(
-                                text = "${allChapters.size} Chapters",
-                                style = MaterialTheme.typography.labelSmall.copy(color = PortalCyan)
+                                text = "${allChapters.size} Chs",
+                                style = MaterialTheme.typography.labelSmall.copy(color = PortalCyan, fontWeight = FontWeight.SemiBold)
                             )
                             Text(text = "•", color = Color.DarkGray)
                             Text(
                                 text = "Ongoing",
-                                style = MaterialTheme.typography.labelSmall.copy(color = PortalGold)
+                                style = MaterialTheme.typography.labelSmall.copy(color = PortalGold, fontWeight = FontWeight.SemiBold)
                             )
                             Text(text = "•", color = Color.DarkGray)
                             Text(
@@ -1437,7 +1477,12 @@ fun CloudSyncDialog(
             }
         },
         text = {
-            Column {
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .verticalScroll(rememberScrollState())
+                    .imePadding()
+            ) {
                 if (isLoggedIn) {
                     // Logged-in Account Card
                     Box(
@@ -1474,8 +1519,18 @@ fun CloudSyncDialog(
                                         fontSize = 14.sp
                                     )
                                     Text(
-                                        text = "Cloud Synchronized",
-                                        color = PortalSky,
+                                        text = if (authUserState.email.trim().equals("divakaryased123@gmail.com", ignoreCase = true))
+                                            "Verified Author Account"
+                                        else
+                                            "Cloud Synchronized",
+                                        color = if (authUserState.email.trim().equals("divakaryased123@gmail.com", ignoreCase = true))
+                                            PortalCyan
+                                        else
+                                            PortalSky,
+                                        fontWeight = if (authUserState.email.trim().equals("divakaryased123@gmail.com", ignoreCase = true))
+                                            FontWeight.Bold
+                                        else
+                                            FontWeight.Normal,
                                         fontSize = 11.sp
                                     )
                                 }
@@ -1771,17 +1826,39 @@ fun CloudSyncDialog(
             }
         },
         dismissButton = {
-            Row {
-                if (isLoggedIn) {
-                    TextButton(
-                        onClick = onLogout,
-                        modifier = Modifier.testTag("auth_sign_out_button")
+            BoxWithConstraints {
+                val isNarrow = maxWidth < 260.dp
+                if (isNarrow) {
+                    Column(
+                        horizontalAlignment = Alignment.End,
+                        verticalArrangement = Arrangement.spacedBy(4.dp)
                     ) {
-                        Text("Sign Out", color = Color(0xFFEF4444))
+                        if (isLoggedIn) {
+                            TextButton(
+                                onClick = onLogout,
+                                modifier = Modifier.testTag("auth_sign_out_button")
+                            ) {
+                                Text("Sign Out", color = Color(0xFFEF4444), fontSize = 12.sp)
+                            }
+                        }
+                        TextButton(onClick = onDismiss) {
+                            Text("Close", color = Color.LightGray, fontSize = 12.sp)
+                        }
                     }
-                }
-                TextButton(onClick = onDismiss) {
-                    Text("Close", color = Color.LightGray)
+                } else {
+                    Row(verticalAlignment = Alignment.CenterVertically) {
+                        if (isLoggedIn) {
+                            TextButton(
+                                onClick = onLogout,
+                                modifier = Modifier.testTag("auth_sign_out_button")
+                            ) {
+                                Text("Sign Out", color = Color(0xFFEF4444), fontSize = 13.sp)
+                            }
+                        }
+                        TextButton(onClick = onDismiss) {
+                            Text("Close", color = Color.LightGray, fontSize = 13.sp)
+                        }
+                    }
                 }
             }
         },

@@ -105,7 +105,7 @@ fun InscribeChapterSheet(
         containerColor = VoidDark.copy(alpha = 0.98f),
         scrimColor = Color.Black.copy(alpha = 0.7f),
         modifier = Modifier
-            .fillMaxHeight(0.92f)
+            .fillMaxWidth()
             .testTag("inscribe_chapter_sheet")
     ) {
         Column(
@@ -408,7 +408,7 @@ fun InscribeChapterSheet(
                 }
             }
 
-            Spacer(modifier = Modifier.height(28.dp))
+            Spacer(modifier = Modifier.height(48.dp))
         }
     }
 }

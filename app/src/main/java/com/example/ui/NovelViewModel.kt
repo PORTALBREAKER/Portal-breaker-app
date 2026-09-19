@@ -84,6 +84,11 @@ class NovelViewModel(application: Application) : AndroidViewModel(application) {
                     _currentUserId.value = user.email.ifBlank { user.uid }
                     prefs.edit().putString("user_id", _currentUserId.value).apply()
                     syncWithUser(uid)
+
+                    // Auto-activate Author Mode if logged into the Author's verified Gmail account
+                    if (user.email.trim().equals(AUTHOR_EMAIL, ignoreCase = true)) {
+                        _isAuthorModeActive.value = true
+                    }
                 } else {
                     _currentUserId.value = ""
                 }
@@ -347,6 +352,11 @@ class NovelViewModel(application: Application) : AndroidViewModel(application) {
         _cloudStatusMessage.value = null
     }
 
+    companion object {
+        const val AUTHOR_EMAIL = "divakaryased123@gmail.com"
+        const val AUTHOR_PASSCODE = "6767"
+    }
+
     // Secret trick triggers
     fun onSecretTrickTriggered() {
         _showSecretDialog.value = true
@@ -357,8 +367,18 @@ class NovelViewModel(application: Application) : AndroidViewModel(application) {
     }
 
     fun verifySecretKey(enteredKey: String): Boolean {
-        // Author secret passcode strictly "6767"
-        val isCorrect = enteredKey.trim() == "6767"
+        val trimmed = enteredKey.trim()
+        val currentEmail = authUserState.value.email.trim()
+
+        // Author access granted if:
+        // 1. Logged-in Firebase account matches the author's Gmail: divakaryased123@gmail.com
+        // 2. Or the entered key matches author's Gmail: divakaryased123@gmail.com
+        // 3. Or the author passcode is entered while logged into the author Gmail, or standard passcode "6767"
+        val isAuthorEmailMatch = currentEmail.equals(AUTHOR_EMAIL, ignoreCase = true) ||
+                trimmed.equals(AUTHOR_EMAIL, ignoreCase = true)
+        val isPasscodeMatch = trimmed == AUTHOR_PASSCODE
+
+        val isCorrect = isAuthorEmailMatch || isPasscodeMatch
         if (isCorrect) {
             _isAuthorModeActive.value = true
             _showSecretDialog.value = false

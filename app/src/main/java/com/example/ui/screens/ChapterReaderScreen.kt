@@ -11,6 +11,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -70,6 +71,7 @@ import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.data.local.ChapterEntity
@@ -589,7 +591,7 @@ fun ChapterReaderScreen(
             exit = fadeOut() + slideOutVertically { -it },
             modifier = Modifier.align(Alignment.TopCenter)
         ) {
-            Column(
+            BoxWithConstraints(
                 modifier = Modifier
                     .fillMaxWidth()
                     .iosGlassHud(
@@ -599,80 +601,92 @@ fun ChapterReaderScreen(
                         isLight = isLight
                     )
                     .statusBarsPadding()
-                    .padding(horizontal = 16.dp, vertical = 6.dp)
+                    .padding(horizontal = 12.dp, vertical = 6.dp)
             ) {
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.SpaceBetween
-                ) {
-                    IconButton(
-                        onClick = onBack,
-                        modifier = Modifier.testTag("reader_back_button")
-                    ) {
-                        Icon(
-                            imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                            contentDescription = "Back",
-                            tint = theme.textColor
-                        )
-                    }
+                val isCompact = maxWidth < 380.dp
 
-                    Column(
-                        horizontalAlignment = Alignment.CenterHorizontally,
-                        modifier = Modifier
-                            .weight(1f)
-                            .padding(horizontal = 8.dp)
+                Column(modifier = Modifier.fillMaxWidth()) {
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.SpaceBetween
                     ) {
-                        Text(
-                            text = chapter.title,
-                            style = MaterialTheme.typography.titleSmall.copy(
-                                color = theme.textColor,
-                                fontWeight = FontWeight.Bold
-                            ),
-                            maxLines = 1
-                        )
-                        Text(
-                            text = "${(progress * 100).toInt()}% completed",
-                            style = MaterialTheme.typography.labelSmall.copy(
-                                color = theme.accentColor,
-                                fontWeight = FontWeight.SemiBold
+                        IconButton(
+                            onClick = onBack,
+                            modifier = Modifier.size(if (isCompact) 36.dp else 44.dp).testTag("reader_back_button")
+                        ) {
+                            Icon(
+                                imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+                                contentDescription = "Back",
+                                tint = theme.textColor,
+                                modifier = Modifier.size(if (isCompact) 20.dp else 24.dp)
                             )
-                        )
-                    }
+                        }
 
-                    Row(verticalAlignment = Alignment.CenterVertically) {
-                        IconButton(
-                            onClick = { onToggleBookmark(chapter.id) },
-                            modifier = Modifier.testTag("reader_bookmark_button")
+                        Column(
+                            horizontalAlignment = Alignment.CenterHorizontally,
+                            modifier = Modifier
+                                .weight(1f)
+                                .padding(horizontal = 4.dp)
                         ) {
-                            Icon(
-                                imageVector = if (chapter.isBookmarked) Icons.Default.Bookmark else Icons.Default.BookmarkBorder,
-                                contentDescription = "Bookmark",
-                                tint = if (chapter.isBookmarked) PortalGold else theme.textColor
+                            Text(
+                                text = chapter.title,
+                                style = (if (isCompact) MaterialTheme.typography.labelMedium else MaterialTheme.typography.titleSmall).copy(
+                                    color = theme.textColor,
+                                    fontWeight = FontWeight.Bold
+                                ),
+                                maxLines = 1,
+                                overflow = TextOverflow.Ellipsis
+                            )
+                            Text(
+                                text = "${(progress * 100).toInt()}% completed",
+                                style = MaterialTheme.typography.labelSmall.copy(
+                                    color = theme.accentColor,
+                                    fontWeight = FontWeight.SemiBold,
+                                    fontSize = if (isCompact) 9.sp else 11.sp
+                                )
                             )
                         }
-                        IconButton(
-                            onClick = { onToggleFavorite(chapter.id) },
-                            modifier = Modifier.testTag("reader_favorite_button")
+
+                        Row(
+                            verticalAlignment = Alignment.CenterVertically,
+                            horizontalArrangement = Arrangement.End
                         ) {
-                            Icon(
-                                imageVector = if (chapter.isFavorite) Icons.Default.Favorite else Icons.Default.FavoriteBorder,
-                                contentDescription = "Favorite",
-                                tint = if (chapter.isFavorite) Color(0xFFFF2A55) else theme.textColor
-                            )
-                        }
-                        IconButton(
-                            onClick = onOpenSettings,
-                            modifier = Modifier.testTag("reader_settings_button")
-                        ) {
-                            Icon(
-                                imageVector = Icons.Default.TextFields,
-                                contentDescription = "Typography Settings",
-                                tint = theme.textColor
-                            )
+                            IconButton(
+                                onClick = { onToggleBookmark(chapter.id) },
+                                modifier = Modifier.size(if (isCompact) 34.dp else 40.dp).testTag("reader_bookmark_button")
+                            ) {
+                                Icon(
+                                    imageVector = if (chapter.isBookmarked) Icons.Default.Bookmark else Icons.Default.BookmarkBorder,
+                                    contentDescription = "Bookmark",
+                                    tint = if (chapter.isBookmarked) PortalGold else theme.textColor,
+                                    modifier = Modifier.size(if (isCompact) 18.dp else 22.dp)
+                                )
+                            }
+                            IconButton(
+                                onClick = { onToggleFavorite(chapter.id) },
+                                modifier = Modifier.size(if (isCompact) 34.dp else 40.dp).testTag("reader_favorite_button")
+                            ) {
+                                Icon(
+                                    imageVector = if (chapter.isFavorite) Icons.Default.Favorite else Icons.Default.FavoriteBorder,
+                                    contentDescription = "Favorite",
+                                    tint = if (chapter.isFavorite) Color(0xFFFF2A55) else theme.textColor,
+                                    modifier = Modifier.size(if (isCompact) 18.dp else 22.dp)
+                                )
+                            }
+                            IconButton(
+                                onClick = onOpenSettings,
+                                modifier = Modifier.size(if (isCompact) 34.dp else 40.dp).testTag("reader_settings_button")
+                            ) {
+                                Icon(
+                                    imageVector = Icons.Default.TextFields,
+                                    contentDescription = "Typography Settings",
+                                    tint = theme.textColor,
+                                    modifier = Modifier.size(if (isCompact) 18.dp else 22.dp)
+                                )
+                            }
                         }
                     }
-                }
 
                 // Top Reading Progress Bar with rounded caps and glowing accent
                 LinearProgressIndicator(
@@ -684,6 +698,7 @@ fun ChapterReaderScreen(
                     color = theme.accentColor,
                     trackColor = theme.textColor.copy(alpha = 0.12f)
                 )
+                }
             }
         }
 
@@ -694,12 +709,14 @@ fun ChapterReaderScreen(
             exit = fadeOut() + slideOutVertically { it },
             modifier = Modifier.align(Alignment.BottomCenter)
         ) {
-            Box(
+            BoxWithConstraints(
                 modifier = Modifier
                     .fillMaxWidth()
                     .navigationBarsPadding()
-                    .padding(horizontal = 20.dp, vertical = 12.dp)
+                    .padding(horizontal = 12.dp, vertical = 8.dp)
             ) {
+                val isCompact = maxWidth < 380.dp
+
                 Box(
                     modifier = Modifier
                         .fillMaxWidth()
@@ -709,7 +726,7 @@ fun ChapterReaderScreen(
                             accentColor = theme.accentColor,
                             isLight = isLight
                         )
-                        .padding(horizontal = 16.dp, vertical = 8.dp)
+                        .padding(horizontal = if (isCompact) 10.dp else 16.dp, vertical = 8.dp)
                 ) {
                     Row(
                         modifier = Modifier.fillMaxWidth(),
@@ -719,12 +736,13 @@ fun ChapterReaderScreen(
                         IconButton(
                             onClick = onPreviousChapter,
                             enabled = hasPreviousChapter,
-                            modifier = Modifier.testTag("prev_chapter_button")
+                            modifier = Modifier.size(if (isCompact) 36.dp else 44.dp).testTag("prev_chapter_button")
                         ) {
                             Icon(
                                 imageVector = Icons.AutoMirrored.Filled.ArrowBack,
                                 contentDescription = "Previous Chapter",
-                                tint = if (hasPreviousChapter) theme.accentColor else Color.Gray.copy(alpha = 0.35f)
+                                tint = if (hasPreviousChapter) theme.accentColor else Color.Gray.copy(alpha = 0.35f),
+                                modifier = Modifier.size(if (isCompact) 20.dp else 24.dp)
                             )
                         }
 
@@ -732,13 +750,13 @@ fun ChapterReaderScreen(
                         Row(verticalAlignment = Alignment.CenterVertically) {
                             IconButton(
                                 onClick = { onQuickChangeFontSize((settings.fontSizeSp - 1f).coerceAtLeast(13f)) },
-                                modifier = Modifier.size(32.dp).testTag("quick_decrease_font")
+                                modifier = Modifier.size(if (isCompact) 28.dp else 32.dp).testTag("quick_decrease_font")
                             ) {
                                 Icon(
                                     imageVector = Icons.Default.TextDecrease,
                                     contentDescription = "Decrease Font Size",
                                     tint = theme.textColor.copy(alpha = 0.7f),
-                                    modifier = Modifier.size(18.dp)
+                                    modifier = Modifier.size(if (isCompact) 16.dp else 18.dp)
                                 )
                             }
 
@@ -756,11 +774,11 @@ fun ChapterReaderScreen(
                                         ),
                                         shape = RoundedCornerShape(12.dp)
                                     )
-                                    .padding(horizontal = 14.dp, vertical = 6.dp)
+                                    .padding(horizontal = if (isCompact) 10.dp else 14.dp, vertical = 6.dp)
                             ) {
                                 Text(
-                                    text = if (chapter.chapterNumber == 0) "Prologue" else "Chapter ${chapter.chapterNumber}",
-                                    style = MaterialTheme.typography.titleSmall.copy(
+                                    text = if (chapter.chapterNumber == 0) "Prologue" else "Ch ${chapter.chapterNumber}",
+                                    style = (if (isCompact) MaterialTheme.typography.labelMedium else MaterialTheme.typography.titleSmall).copy(
                                         color = theme.textColor,
                                         fontWeight = FontWeight.Bold,
                                         letterSpacing = 0.5.sp
@@ -770,13 +788,13 @@ fun ChapterReaderScreen(
 
                             IconButton(
                                 onClick = { onQuickChangeFontSize((settings.fontSizeSp + 1f).coerceAtMost(28f)) },
-                                modifier = Modifier.size(32.dp).testTag("quick_increase_font")
+                                modifier = Modifier.size(if (isCompact) 28.dp else 32.dp).testTag("quick_increase_font")
                             ) {
                                 Icon(
                                     imageVector = Icons.Default.TextIncrease,
                                     contentDescription = "Increase Font Size",
                                     tint = theme.textColor.copy(alpha = 0.7f),
-                                    modifier = Modifier.size(18.dp)
+                                    modifier = Modifier.size(if (isCompact) 16.dp else 18.dp)
                                 )
                             }
                         }
@@ -784,12 +802,13 @@ fun ChapterReaderScreen(
                         IconButton(
                             onClick = onNextChapter,
                             enabled = hasNextChapter,
-                            modifier = Modifier.testTag("next_chapter_button")
+                            modifier = Modifier.size(if (isCompact) 36.dp else 44.dp).testTag("next_chapter_button")
                         ) {
                             Icon(
                                 imageVector = Icons.AutoMirrored.Filled.ArrowForward,
                                 contentDescription = "Next Chapter",
-                                tint = if (hasNextChapter) theme.accentColor else Color.Gray.copy(alpha = 0.35f)
+                                tint = if (hasNextChapter) theme.accentColor else Color.Gray.copy(alpha = 0.35f),
+                                modifier = Modifier.size(if (isCompact) 20.dp else 24.dp)
                             )
                         }
                     }

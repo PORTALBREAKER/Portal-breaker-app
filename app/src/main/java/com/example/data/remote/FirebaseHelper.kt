@@ -15,9 +15,10 @@ object FirebaseHelper {
                 apps[0]
             } else {
                 val options = FirebaseOptions.Builder()
-                    .setApplicationId(context.packageName)
-                    .setProjectId("portal-breaker-novel")
-                    .setApiKey("AIzaSyFakeKeySafeInitPortalBreaker9912")
+                    .setApplicationId("1:289538537180:android:3c0fc14d5a00a1f5766619")
+                    .setProjectId("portal-breaker")
+                    .setApiKey("AIzaSyDj5hgOZgwILwttKNNAIDrYpJK3h10CKVs")
+                    .setStorageBucket("portal-breaker.firebasestorage.app")
                     .build()
                 FirebaseApp.initializeApp(context, options)
             }

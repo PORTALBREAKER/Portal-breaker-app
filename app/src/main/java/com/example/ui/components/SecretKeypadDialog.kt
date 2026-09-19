@@ -3,6 +3,9 @@ package com.example.ui.components
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
+import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -89,7 +92,10 @@ fun SecretKeypadDialog(
         ) {
             Column(
                 horizontalAlignment = Alignment.CenterHorizontally,
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .verticalScroll(rememberScrollState())
+                    .imePadding()
             ) {
                 // Top close icon
                 Row(
@@ -157,7 +163,7 @@ fun SecretKeypadDialog(
                 Spacer(modifier = Modifier.height(6.dp))
 
                 Text(
-                    text = "Enter the 4-digit author passcode to unlock management controls.",
+                    text = "Enter your verified Author Gmail or the 4-digit author passcode to unlock management controls.",
                     style = MaterialTheme.typography.bodyMedium.copy(
                         color = Color.LightGray,
                         textAlign = TextAlign.Center
@@ -167,17 +173,16 @@ fun SecretKeypadDialog(
 
                 Spacer(modifier = Modifier.height(20.dp))
 
-                // Passcode text field
+                // Passcode or Email text field
                 OutlinedTextField(
                     value = passcodeInput,
                     onValueChange = {
                         passcodeInput = it
                         isError = false
                     },
-                    label = { Text("Passcode", color = Color.Gray) },
-                    visualTransformation = PasswordVisualTransformation(),
+                    label = { Text("Author Email or Passcode", color = Color.Gray) },
                     singleLine = true,
-                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.NumberPassword, imeAction = ImeAction.Done),
+                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email, imeAction = ImeAction.Done),
                     keyboardActions = KeyboardActions(onDone = {
                         if (verifyKey(passcodeInput)) {
                             onSuccess()
@@ -202,7 +207,7 @@ fun SecretKeypadDialog(
 
                 AnimatedVisibility(visible = isError) {
                     Text(
-                        text = "Incorrect passcode.",
+                        text = "Access denied. Only divakaryased123@gmail.com or valid author key is authorized.",
                         color = Color(0xFFEF4444),
                         style = MaterialTheme.typography.labelSmall,
                         modifier = Modifier.padding(top = 4.dp)
@@ -237,7 +242,7 @@ fun SecretKeypadDialog(
                     )
                     Spacer(modifier = Modifier.width(8.dp))
                     Text(
-                        text = "Verify Passcode",
+                        text = "Verify Author Access",
                         fontWeight = FontWeight.Bold,
                         style = MaterialTheme.typography.titleMedium
                     )
