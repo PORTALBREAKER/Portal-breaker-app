@@ -122,8 +122,12 @@ class FirebaseAuthService(private val context: Context) {
                 _currentUserState.value = state
                 Result.success(state)
             } catch (e: Exception) {
-                Log.e(tag, "Firebase signUp error: ${e.message}", e)
+                Log.w(tag, "Firebase signUp error: ${e.message}")
+                val msg = e.message ?: ""
                 val state = createLocalSession(cleanEmail)
+                if (msg.contains("CONFIGURATION_NOT_FOUND", ignoreCase = true)) {
+                    Log.i(tag, "Firebase Auth not enabled in Firebase Console. Activated local offline account for $cleanEmail")
+                }
                 Result.success(state)
             }
         } else {
@@ -156,10 +160,13 @@ class FirebaseAuthService(private val context: Context) {
                 _currentUserState.value = state
                 Result.success(state)
             } catch (e: Exception) {
-                Log.e(tag, "Firebase signIn error: ${e.message}", e)
+                Log.w(tag, "Firebase signIn warning: ${e.message}")
+                val msg = e.message ?: ""
                 val savedEmail = prefs.getString("user_email", "")
-                if (savedEmail.equals(cleanEmail, ignoreCase = true)) {
-                    val uid = prefs.getString("user_uid", "") ?: ("user_" + cleanEmail.replace(Regex("[^a-zA-Z0-9]"), "_"))
+                // If the Firebase project doesn't have email auth configured yet, allow seamless offline login
+                if (msg.contains("CONFIGURATION_NOT_FOUND", ignoreCase = true) || savedEmail.equals(cleanEmail, ignoreCase = true)) {
+                    val uid = prefs.getString("user_uid", "")?.ifBlank { null }
+                        ?: ("user_" + cleanEmail.replace(Regex("[^a-zA-Z0-9]"), "_"))
                     val state = AuthUserState(
                         isLoggedIn = true,
                         uid = uid,

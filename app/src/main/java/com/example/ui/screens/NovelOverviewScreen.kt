@@ -347,6 +347,7 @@ fun NovelOverviewScreen(
                                             modifier = Modifier
                                                 .clip(RoundedCornerShape(4.dp))
                                                 .background(PortalCyan.copy(alpha = 0.2f))
+                                                .clickable { showCloudDialog = true }
                                                 .padding(horizontal = 5.dp, vertical = 2.dp)
                                         ) {
                                             Row(verticalAlignment = Alignment.CenterVertically) {
@@ -477,6 +478,8 @@ fun NovelOverviewScreen(
                             chapters = chapters,
                             allChapters = allChapters,
                             lastReadChapter = lastReadChapter,
+                            isAuthorMode = isAuthorMode,
+                            onOpenInscribeNew = onOpenInscribeNew,
                             onOpenChapter = onOpenChapter,
                             onSwitchToChapters = { onSelectTab(AppTab.CHAPTERS) }
                         )
@@ -649,6 +652,8 @@ private fun HomeTabContent(
     chapters: List<ChapterEntity>,
     allChapters: List<ChapterEntity>,
     lastReadChapter: ChapterEntity?,
+    isAuthorMode: Boolean,
+    onOpenInscribeNew: () -> Unit,
     onOpenChapter: (Long) -> Unit,
     onSwitchToChapters: () -> Unit
 ) {
@@ -776,11 +781,92 @@ private fun HomeTabContent(
             }
         }
 
+        // Empty State Banner if no chapters yet
+        if (allChapters.isEmpty()) {
+            item {
+                Spacer(modifier = Modifier.height(14.dp))
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .glassmorphic(
+                            shape = RoundedCornerShape(18.dp),
+                            backgroundColor = VoidCard.copy(alpha = 0.9f),
+                            borderColor = PortalCyan.copy(alpha = 0.3f)
+                        )
+                        .padding(18.dp)
+                ) {
+                    Column(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalAlignment = Alignment.CenterHorizontally
+                    ) {
+                        Box(
+                            modifier = Modifier
+                                .size(48.dp)
+                                .clip(CircleShape)
+                                .background(PortalCyan.copy(alpha = 0.15f)),
+                            contentAlignment = Alignment.Center
+                        ) {
+                            Icon(
+                                imageVector = Icons.Default.MenuBook,
+                                contentDescription = null,
+                                tint = PortalCyan,
+                                modifier = Modifier.size(24.dp)
+                            )
+                        }
+                        Spacer(modifier = Modifier.height(10.dp))
+                        Text(
+                            text = if (isAuthorMode) "Ready to Inscribe Chapter 1" else "First Chapter Inscribing Soon",
+                            style = MaterialTheme.typography.titleSmall.copy(
+                                color = Color.White,
+                                fontWeight = FontWeight.Bold
+                            ),
+                            textAlign = TextAlign.Center
+                        )
+                        Spacer(modifier = Modifier.height(4.dp))
+                        Text(
+                            text = if (isAuthorMode) {
+                                "Welcome Author Arun! You can now write and publish the prologue or Chapter 1 directly into your novel."
+                            } else {
+                                "Author Arun is currently crafting the manuscript. Check back shortly or explore the table of contents."
+                            },
+                            style = MaterialTheme.typography.bodySmall.copy(
+                                color = Color.LightGray,
+                                fontSize = 12.sp,
+                                lineHeight = 16.sp
+                            ),
+                            textAlign = TextAlign.Center
+                        )
+
+                        if (isAuthorMode) {
+                            Spacer(modifier = Modifier.height(12.dp))
+                            Button(
+                                onClick = onOpenInscribeNew,
+                                colors = ButtonDefaults.buttonColors(
+                                    containerColor = PortalCyan,
+                                    contentColor = VoidDark
+                                ),
+                                shape = RoundedCornerShape(12.dp),
+                                modifier = Modifier.testTag("empty_home_inscribe_button")
+                            ) {
+                                Icon(
+                                    imageVector = Icons.Default.Add,
+                                    contentDescription = null,
+                                    modifier = Modifier.size(16.dp)
+                                )
+                                Spacer(modifier = Modifier.width(6.dp))
+                                Text("Inscribe Chapter 1", fontWeight = FontWeight.Bold, fontSize = 13.sp)
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
         // Continue Reading Quick Jump Card (or Start Reading Prologue)
         item {
-            Spacer(modifier = Modifier.height(14.dp))
             val targetChapter = lastReadChapter ?: allChapters.firstOrNull()
             if (targetChapter != null) {
+                Spacer(modifier = Modifier.height(14.dp))
                 Box(
                     modifier = Modifier
                         .fillMaxWidth()
@@ -818,7 +904,7 @@ private fun HomeTabContent(
                             }
                             Spacer(modifier = Modifier.height(4.dp))
                             Text(
-                                text = targetChapter.title,
+                                targetChapter.title,
                                 style = MaterialTheme.typography.titleSmall.copy(
                                     color = Color.White,
                                     fontWeight = FontWeight.SemiBold

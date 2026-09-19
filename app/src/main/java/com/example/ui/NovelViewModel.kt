@@ -248,13 +248,13 @@ class NovelViewModel(application: Application) : AndroidViewModel(application) {
 
     fun signUpWithEmail(email: String, pass: String, onResult: (Boolean, String?) -> Unit) {
         _isCloudSyncing.value = true
-        _cloudStatusMessage.value = "Creating Firebase account..."
+        _cloudStatusMessage.value = "Creating account..."
         viewModelScope.launch {
             val res = authService.signUpWithEmail(email, pass)
             _isCloudSyncing.value = false
             if (res.isSuccess) {
                 val state = res.getOrThrow()
-                _cloudStatusMessage.value = "Account created for ${state.email}! Cloud sync active."
+                _cloudStatusMessage.value = "Account ready for ${state.email}!"
                 syncWithUser(state.uid.ifBlank { state.email })
                 onResult(true, null)
             } else {
