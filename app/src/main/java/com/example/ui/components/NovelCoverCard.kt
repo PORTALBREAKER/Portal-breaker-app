@@ -38,9 +38,12 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.ui.theme.PortalCyan
+import com.example.ui.theme.PortalCrimson
+import com.example.ui.theme.PortalFlame
 import com.example.ui.theme.PortalGold
 import com.example.ui.theme.PortalPurple
+import com.example.ui.theme.PortalRedLightning
+import com.example.ui.theme.PortalRuby
 import com.example.ui.theme.PortalSky
 import com.example.ui.theme.VoidBorder
 import com.example.ui.theme.VoidDark
@@ -63,41 +66,41 @@ fun NovelCoverCard(
 
     Box(
         modifier = modifier
-            .shadow(16.dp, RoundedCornerShape(20.dp), spotColor = PortalCyan)
+            .shadow(16.dp, RoundedCornerShape(20.dp), spotColor = PortalRedLightning)
             .clip(RoundedCornerShape(20.dp))
             .background(
                 brush = Brush.verticalGradient(
                     listOf(
-                        Color(0xFF090D1A),
-                        Color(0xFF130D2B),
-                        Color(0xFF070B14)
+                        Color(0xFF1E080D),
+                        Color(0xFF2B0712),
+                        Color(0xFF0F0407)
                     )
                 )
             )
             .border(
                 1.5.dp,
                 Brush.linearGradient(
-                    listOf(PortalCyan.copy(alpha = 0.6f), PortalPurple.copy(alpha = 0.4f), Color.Transparent)
+                    listOf(PortalRedLightning.copy(alpha = 0.75f), PortalCrimson.copy(alpha = 0.5f), Color.Transparent)
                 ),
                 RoundedCornerShape(20.dp)
             )
     ) {
-        // Procedural Portal Rift Graphic
+        // Procedural Portal Rift Graphic - Red Lightning Edition
         Canvas(modifier = Modifier.fillMaxSize()) {
             val w = size.width
             val h = size.height
 
-            // Cosmic nebulas
+            // Cosmic crimson nebulas
             drawCircle(
                 brush = Brush.radialGradient(
-                    listOf(PortalPurple.copy(alpha = 0.45f * riftPulse), Color.Transparent),
+                    listOf(PortalPurple.copy(alpha = 0.50f * riftPulse), Color.Transparent),
                     center = Offset(w * 0.5f, h * 0.45f),
                     radius = w * 0.65f
                 )
             )
             drawCircle(
                 brush = Brush.radialGradient(
-                    listOf(PortalCyan.copy(alpha = 0.35f * riftPulse), Color.Transparent),
+                    listOf(PortalRedLightning.copy(alpha = 0.40f * riftPulse), Color.Transparent),
                     center = Offset(w * 0.5f, h * 0.5f),
                     radius = w * 0.45f
                 )
@@ -105,19 +108,19 @@ fun NovelCoverCard(
 
             // Outer portal rings
             drawCircle(
-                color = PortalCyan.copy(alpha = 0.3f),
+                color = PortalRedLightning.copy(alpha = 0.35f),
                 radius = w * 0.38f,
                 center = Offset(w * 0.5f, h * 0.45f),
                 style = Stroke(width = 1.5.dp.toPx())
             )
             drawCircle(
-                color = PortalPurple.copy(alpha = 0.5f),
+                color = PortalCrimson.copy(alpha = 0.5f),
                 radius = w * 0.28f,
                 center = Offset(w * 0.5f, h * 0.45f),
                 style = Stroke(width = 2.dp.toPx())
             )
 
-            // Shattered Spatial Fracture lightning lines
+            // Shattered Spatial Fracture lightning lines (Red Lightning)
             val riftPath = Path().apply {
                 moveTo(w * 0.5f, h * 0.15f)
                 lineTo(w * 0.46f, h * 0.32f)
@@ -133,14 +136,14 @@ fun NovelCoverCard(
             )
             drawPath(
                 path = riftPath,
-                color = PortalCyan.copy(alpha = 0.7f),
+                color = PortalRedLightning.copy(alpha = 0.85f),
                 style = Stroke(width = 7.dp.toPx(), cap = StrokeCap.Round)
             )
 
             // Floating crystalline shards
-            drawCircle(PortalCyan, 3.dp.toPx(), Offset(w * 0.28f, h * 0.35f))
-            drawCircle(PortalSky, 2.dp.toPx(), Offset(w * 0.72f, h * 0.42f))
-            drawCircle(PortalPurple, 3.5.dp.toPx(), Offset(w * 0.35f, h * 0.62f))
+            drawCircle(PortalRedLightning, 3.dp.toPx(), Offset(w * 0.28f, h * 0.35f))
+            drawCircle(PortalFlame, 2.dp.toPx(), Offset(w * 0.72f, h * 0.42f))
+            drawCircle(PortalRuby, 3.5.dp.toPx(), Offset(w * 0.35f, h * 0.62f))
             drawCircle(PortalGold, 2.5.dp.toPx(), Offset(w * 0.65f, h * 0.28f))
         }
 
@@ -152,10 +155,10 @@ fun NovelCoverCard(
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Text(
-                text = "WEBNOVEL SERIES",
+                text = "RED LIGHTNING EDITION",
                 style = MaterialTheme.typography.labelSmall.copy(
-                    color = PortalCyan,
-                    letterSpacing = 2.sp,
+                    color = PortalRedLightning,
+                    letterSpacing = 1.5.sp,
                     fontWeight = FontWeight.Bold
                 )
             )
@@ -176,7 +179,7 @@ fun NovelCoverCard(
                 style = MaterialTheme.typography.displayMedium.copy(
                     fontFamily = FontFamily.Serif,
                     fontWeight = FontWeight.Black,
-                    color = PortalCyan,
+                    color = PortalRedLightning,
                     letterSpacing = 3.sp
                 )
             )

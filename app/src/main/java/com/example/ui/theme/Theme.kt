@@ -7,20 +7,21 @@ import androidx.compose.material3.darkColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.SideEffect
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalView
 import androidx.core.view.WindowCompat
 
 private val DarkColorScheme = darkColorScheme(
-    primary = PortalCyan,
-    onPrimary = VoidDark,
+    primary = PortalRedLightning,
+    onPrimary = Color.White,
     primaryContainer = VoidSurfaceVariant,
-    onPrimaryContainer = PortalCyan,
-    secondary = PortalViolet,
+    onPrimaryContainer = PortalRedLightning,
+    secondary = PortalCrimson,
     onSecondary = TextPrimaryDark,
     secondaryContainer = VoidCard,
     onSecondaryContainer = PortalSky,
-    tertiary = PortalSky,
+    tertiary = PortalFlame,
     onTertiary = VoidDark,
     background = VoidDark,
     onBackground = TextPrimaryDark,
@@ -32,15 +33,15 @@ private val DarkColorScheme = darkColorScheme(
 )
 
 private val LightColorScheme = lightColorScheme(
-    primary = PortalPurple,
+    primary = PortalRedLightning,
     onPrimary = LightSurface,
     primaryContainer = LightSurfaceVariant,
-    onPrimaryContainer = PortalPurple,
-    secondary = PortalSky,
+    onPrimaryContainer = PortalRedLightning,
+    secondary = PortalCrimson,
     onSecondary = LightSurface,
     secondaryContainer = LightSurfaceVariant,
-    onSecondaryContainer = PortalPurple,
-    tertiary = PortalCyan,
+    onSecondaryContainer = PortalCrimson,
+    tertiary = PortalFlame,
     onTertiary = TextPrimaryLight,
     background = LightCanvas,
     onBackground = TextPrimaryLight,

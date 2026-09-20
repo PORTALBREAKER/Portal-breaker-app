@@ -34,8 +34,8 @@ import androidx.compose.ui.unit.dp
 fun Modifier.glassmorphic(
     shape: Shape = RoundedCornerShape(20.dp),
     backgroundColor: Color = Color(0x1AFFFFFF),
-    borderColor: Color = Color(0x3300F5D4),
-    secondaryBorderColor: Color = Color(0x228B5CF6),
+    borderColor: Color = Color(0x33FF1E44),
+    secondaryBorderColor: Color = Color(0x22FF2A55),
     borderWidth: Dp = 1.dp
 ): Modifier = this
     .clip(shape)
@@ -73,7 +73,7 @@ fun Modifier.glassmorphic(
 fun Modifier.iosReaderGlassSurface(
     shape: Shape = RoundedCornerShape(22.dp),
     backgroundColor: Color = Color(0x14FFFFFF),
-    accentColor: Color = PortalCyan,
+    accentColor: Color = PortalRedLightning,
     isLight: Boolean = false,
     borderWidth: Dp = 1.dp
 ): Modifier = this
@@ -144,7 +144,7 @@ fun Modifier.iosReaderGlassSurface(
 fun Modifier.iosGlassHud(
     shape: Shape = RoundedCornerShape(22.dp),
     containerColor: Color = VoidDark,
-    accentColor: Color = PortalCyan,
+    accentColor: Color = PortalRedLightning,
     isLight: Boolean = false
 ): Modifier = this
     .shadow(
@@ -274,7 +274,7 @@ fun NeomorphicButton(
             .neomorphic(shape = shape, elevation = 4.dp, surfaceColor = backgroundColor, isDark = isDark)
             .clickable(
                 interactionSource = interactionSource,
-                indication = ripple(color = PortalCyan),
+                indication = ripple(color = PortalRedLightning),
                 onClick = onClick
             ),
         propagateMinConstraints = false
@@ -284,7 +284,7 @@ fun NeomorphicButton(
 }
 
 /**
- * Animated Dimensional Portal Background with pulsating cosmic energy rings
+ * Animated Dimensional Portal Background with pulsating cosmic energy rings (Red Lightning Edition)
  */
 @Composable
 fun PortalCosmicBackground(
@@ -319,12 +319,12 @@ fun PortalCosmicBackground(
                 val canvasWidth = size.width
                 val canvasHeight = size.height
 
-                // Radial cosmic glow from top-right corner
+                // Radial cosmic glow from top-right corner (crimson & purple)
                 drawCircle(
                     brush = Brush.radialGradient(
                         colors = listOf(
                             PortalPurple.copy(alpha = pulseAlpha),
-                            PortalSky.copy(alpha = pulseAlpha * 0.4f),
+                            PortalCrimson.copy(alpha = pulseAlpha * 0.4f),
                             Color.Transparent
                         ),
                         center = Offset(canvasWidth * 0.85f + rotateShift, canvasHeight * 0.15f),
@@ -332,11 +332,11 @@ fun PortalCosmicBackground(
                     )
                 )
 
-                // Secondary cyan fracture glow from bottom-left corner
+                // Secondary Red Lightning fracture glow from bottom-left corner
                 drawCircle(
                     brush = Brush.radialGradient(
                         colors = listOf(
-                            PortalCyan.copy(alpha = pulseAlpha * 0.6f),
+                            PortalRedLightning.copy(alpha = pulseAlpha * 0.6f),
                             Color.Transparent
                         ),
                         center = Offset(canvasWidth * 0.1f, canvasHeight * 0.75f),

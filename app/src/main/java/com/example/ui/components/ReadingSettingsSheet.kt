@@ -49,8 +49,9 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.data.local.ReadingSettingsEntity
-import com.example.ui.theme.PortalCyan
+import com.example.ui.theme.PortalCrimson
 import com.example.ui.theme.PortalPurple
+import com.example.ui.theme.PortalRedLightning
 import com.example.ui.theme.PortalSky
 import com.example.ui.theme.ReaderThemes
 import com.example.ui.theme.VoidBorder
@@ -69,8 +70,8 @@ data class ThemeOption(
 )
 
 val availableThemes = listOf(
-    ThemeOption("MIDNIGHT_NEBULA", "Midnight", ReaderThemes.MidnightBg, ReaderThemes.MidnightText, ReaderThemes.MidnightAccent),
     ThemeOption("CRIMSON_RIFT", "Red Lightning", ReaderThemes.CrimsonRiftBg, ReaderThemes.CrimsonRiftText, ReaderThemes.CrimsonRiftAccent),
+    ThemeOption("MIDNIGHT_NEBULA", "Midnight", ReaderThemes.MidnightBg, ReaderThemes.MidnightText, ReaderThemes.MidnightAccent),
     ThemeOption("DARK_VOID", "Void OLED", ReaderThemes.VoidBg, ReaderThemes.VoidText, ReaderThemes.VoidAccent),
     ThemeOption("SEPIA_PARCHMENT", "Parchment", ReaderThemes.SepiaBg, ReaderThemes.SepiaText, ReaderThemes.SepiaAccent),
     ThemeOption("CYBER_MINT", "Cyber Mint", ReaderThemes.CyberBg, ReaderThemes.CyberText, ReaderThemes.CyberAccent),
@@ -110,7 +111,7 @@ fun ReadingSettingsSheet(
                     Icon(
                         imageVector = Icons.Default.TextFields,
                         contentDescription = null,
-                        tint = PortalCyan,
+                        tint = PortalRedLightning,
                         modifier = Modifier.size(24.dp)
                     )
                     Spacer(modifier = Modifier.width(10.dp))
@@ -133,7 +134,7 @@ fun ReadingSettingsSheet(
                     .glassmorphic(
                         shape = RoundedCornerShape(16.dp),
                         backgroundColor = VoidCard.copy(alpha = 0.8f),
-                        borderColor = PortalCyan.copy(alpha = 0.3f)
+                        borderColor = PortalRedLightning.copy(alpha = 0.4f)
                     )
                     .padding(16.dp)
             ) {
@@ -141,14 +142,14 @@ fun ReadingSettingsSheet(
                     Text(
                         text = "PREVIEW",
                         style = MaterialTheme.typography.labelSmall.copy(
-                            color = PortalCyan,
+                            color = PortalRedLightning,
                             letterSpacing = 1.5.sp,
                             fontWeight = FontWeight.SemiBold
                         )
                     )
                     Spacer(modifier = Modifier.height(6.dp))
                     Text(
-                        text = "The cosmic rift resonated with pure cyan light, warping the laws of spatial physics.",
+                        text = "The cosmic rift resonated with pure red lightning, warping the laws of spatial physics.",
                         fontSize = settings.fontSizeSp.sp,
                         lineHeight = (settings.fontSizeSp * settings.lineSpacingMultiplier).sp,
                         fontFamily = when (settings.fontFamilyType) {
@@ -167,7 +168,7 @@ fun ReadingSettingsSheet(
             Text(
                 text = "READING CANVAS THEME",
                 style = MaterialTheme.typography.labelMedium.copy(
-                    color = PortalSky,
+                    color = PortalCrimson,
                     fontWeight = FontWeight.Bold,
                     letterSpacing = 1.sp
                 )
@@ -195,7 +196,7 @@ fun ReadingSettingsSheet(
                                 .background(theme.bgColor)
                                 .border(
                                     width = if (isSelected) 2.5.dp else 1.dp,
-                                    color = if (isSelected) PortalCyan else VoidBorder,
+                                    color = if (isSelected) PortalRedLightning else VoidBorder,
                                     shape = CircleShape
                                 ),
                             contentAlignment = Alignment.Center
@@ -213,7 +214,7 @@ fun ReadingSettingsSheet(
                         Text(
                             text = theme.name,
                             style = MaterialTheme.typography.labelSmall.copy(
-                                color = if (isSelected) PortalCyan else Color.LightGray,
+                                color = if (isSelected) PortalRedLightning else Color.LightGray,
                                 fontSize = 11.sp
                             )
                         )
@@ -227,7 +228,7 @@ fun ReadingSettingsSheet(
             Text(
                 text = "FONT TYPEFACE",
                 style = MaterialTheme.typography.labelMedium.copy(
-                    color = PortalSky,
+                    color = PortalCrimson,
                     fontWeight = FontWeight.Bold,
                     letterSpacing = 1.sp
                 )
@@ -258,15 +259,15 @@ fun ReadingSettingsSheet(
                             )
                         },
                         colors = FilterChipDefaults.filterChipColors(
-                            selectedContainerColor = PortalCyan.copy(alpha = 0.2f),
-                            selectedLabelColor = PortalCyan,
+                            selectedContainerColor = PortalRedLightning.copy(alpha = 0.2f),
+                            selectedLabelColor = PortalRedLightning,
                             containerColor = VoidSurface,
                             labelColor = Color.LightGray
                         ),
                         border = FilterChipDefaults.filterChipBorder(
                             enabled = true,
                             selected = isSelected,
-                            borderColor = if (isSelected) PortalCyan else VoidBorder
+                            borderColor = if (isSelected) PortalRedLightning else VoidBorder
                         )
                     )
                 }
@@ -283,14 +284,14 @@ fun ReadingSettingsSheet(
                 Text(
                     text = "FONT SIZE",
                     style = MaterialTheme.typography.labelMedium.copy(
-                        color = PortalSky,
+                        color = PortalCrimson,
                         fontWeight = FontWeight.Bold,
                         letterSpacing = 1.sp
                     )
                 )
                 Text(
                     text = "${settings.fontSizeSp.toInt()} sp",
-                    color = PortalCyan,
+                    color = PortalRedLightning,
                     style = MaterialTheme.typography.labelMedium.copy(fontWeight = FontWeight.Bold)
                 )
             }
@@ -300,8 +301,8 @@ fun ReadingSettingsSheet(
                 valueRange = 13f..26f,
                 steps = 12,
                 colors = SliderDefaults.colors(
-                    thumbColor = PortalCyan,
-                    activeTrackColor = PortalCyan,
+                    thumbColor = PortalRedLightning,
+                    activeTrackColor = PortalRedLightning,
                     inactiveTrackColor = VoidBorder
                 ),
                 modifier = Modifier.testTag("font_size_slider")
@@ -318,14 +319,14 @@ fun ReadingSettingsSheet(
                 Text(
                     text = "LINE SPACING",
                     style = MaterialTheme.typography.labelMedium.copy(
-                        color = PortalSky,
+                        color = PortalCrimson,
                         fontWeight = FontWeight.Bold,
                         letterSpacing = 1.sp
                     )
                 )
                 Text(
                     text = "${String.format("%.1f", settings.lineSpacingMultiplier)}x",
-                    color = PortalCyan,
+                    color = PortalRedLightning,
                     style = MaterialTheme.typography.labelMedium.copy(fontWeight = FontWeight.Bold)
                 )
             }
@@ -335,8 +336,8 @@ fun ReadingSettingsSheet(
                 valueRange = 1.3f..2.2f,
                 steps = 8,
                 colors = SliderDefaults.colors(
-                    thumbColor = PortalCyan,
-                    activeTrackColor = PortalCyan,
+                    thumbColor = PortalRedLightning,
+                    activeTrackColor = PortalRedLightning,
                     inactiveTrackColor = VoidBorder
                 ),
                 modifier = Modifier.testTag("line_spacing_slider")
@@ -367,8 +368,8 @@ fun ReadingSettingsSheet(
                     checked = settings.isJustified,
                     onCheckedChange = { onSettingsChanged(settings.copy(isJustified = it)) },
                     colors = SwitchDefaults.colors(
-                        checkedThumbColor = PortalCyan,
-                        checkedTrackColor = PortalCyan.copy(alpha = 0.3f),
+                        checkedThumbColor = PortalRedLightning,
+                        checkedTrackColor = PortalRedLightning.copy(alpha = 0.3f),
                         uncheckedThumbColor = Color.Gray,
                         uncheckedTrackColor = VoidSurface
                     )
@@ -400,8 +401,8 @@ fun ReadingSettingsSheet(
                     checked = settings.paragraphIndent,
                     onCheckedChange = { onSettingsChanged(settings.copy(paragraphIndent = it)) },
                     colors = SwitchDefaults.colors(
-                        checkedThumbColor = PortalCyan,
-                        checkedTrackColor = PortalCyan.copy(alpha = 0.3f),
+                        checkedThumbColor = PortalRedLightning,
+                        checkedTrackColor = PortalRedLightning.copy(alpha = 0.3f),
                         uncheckedThumbColor = Color.Gray,
                         uncheckedTrackColor = VoidSurface
                     )
@@ -433,8 +434,8 @@ fun ReadingSettingsSheet(
                     checked = settings.keepScreenOn,
                     onCheckedChange = { onSettingsChanged(settings.copy(keepScreenOn = it)) },
                     colors = SwitchDefaults.colors(
-                        checkedThumbColor = PortalCyan,
-                        checkedTrackColor = PortalCyan.copy(alpha = 0.3f),
+                        checkedThumbColor = PortalRedLightning,
+                        checkedTrackColor = PortalRedLightning.copy(alpha = 0.3f),
                         uncheckedThumbColor = Color.Gray,
                         uncheckedTrackColor = VoidSurface
                     )

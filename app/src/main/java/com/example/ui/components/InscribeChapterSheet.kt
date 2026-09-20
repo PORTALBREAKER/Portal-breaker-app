@@ -50,8 +50,9 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.data.local.ChapterEntity
-import com.example.ui.theme.PortalCyan
+import com.example.ui.theme.PortalCrimson
 import com.example.ui.theme.PortalPurple
+import com.example.ui.theme.PortalRedLightning
 import com.example.ui.theme.PortalSky
 import com.example.ui.theme.VoidBorder
 import com.example.ui.theme.VoidCard
@@ -116,7 +117,7 @@ fun InscribeChapterSheet(
                 .padding(horizontal = 20.dp)
                 .verticalScroll(rememberScrollState())
         ) {
-            // Header Row
+            // Header
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceBetween,
@@ -127,15 +128,15 @@ fun InscribeChapterSheet(
                         modifier = Modifier
                             .glassmorphic(
                                 shape = RoundedCornerShape(10.dp),
-                                backgroundColor = PortalCyan.copy(alpha = 0.15f),
-                                borderColor = PortalCyan
+                                backgroundColor = PortalRedLightning.copy(alpha = 0.15f),
+                                borderColor = PortalRedLightning
                             )
                             .padding(8.dp)
                     ) {
                         Icon(
                             imageVector = Icons.Default.EditNote,
                             contentDescription = null,
-                            tint = PortalCyan,
+                            tint = PortalRedLightning,
                             modifier = Modifier.size(24.dp)
                         )
                     }
@@ -151,7 +152,7 @@ fun InscribeChapterSheet(
                         )
                         Text(
                             text = "Author Sanctuary • Worldwide Cloud Sync",
-                            style = MaterialTheme.typography.labelSmall.copy(color = PortalCyan)
+                            style = MaterialTheme.typography.labelSmall.copy(color = PortalRedLightning)
                         )
                     }
                 }
@@ -180,7 +181,7 @@ fun InscribeChapterSheet(
             ) {
                 Column(horizontalAlignment = Alignment.CenterHorizontally) {
                     Text("Word Count", style = MaterialTheme.typography.labelSmall.copy(color = Color.Gray))
-                    Text("$wordCount words", style = MaterialTheme.typography.labelLarge.copy(color = PortalCyan))
+                    Text("$wordCount words", style = MaterialTheme.typography.labelLarge.copy(color = PortalRedLightning))
                 }
                 Column(horizontalAlignment = Alignment.CenterHorizontally) {
                     Text("Reading Time", style = MaterialTheme.typography.labelSmall.copy(color = Color.Gray))
@@ -206,7 +207,7 @@ fun InscribeChapterSheet(
                     keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
                     singleLine = true,
                     colors = OutlinedTextFieldDefaults.colors(
-                        focusedBorderColor = PortalCyan,
+                        focusedBorderColor = PortalRedLightning,
                         unfocusedBorderColor = VoidBorder,
                         focusedTextColor = Color.White,
                         unfocusedTextColor = Color.White,
@@ -225,7 +226,7 @@ fun InscribeChapterSheet(
                     label = { Text("Story Arc / Volume", color = Color.Gray) },
                     singleLine = true,
                     colors = OutlinedTextFieldDefaults.colors(
-                        focusedBorderColor = PortalCyan,
+                        focusedBorderColor = PortalRedLightning,
                         unfocusedBorderColor = VoidBorder,
                         focusedTextColor = Color.White,
                         unfocusedTextColor = Color.White,
@@ -250,7 +251,7 @@ fun InscribeChapterSheet(
                 singleLine = true,
                 isError = titleError,
                 colors = OutlinedTextFieldDefaults.colors(
-                    focusedBorderColor = PortalCyan,
+                    focusedBorderColor = PortalRedLightning,
                     unfocusedBorderColor = VoidBorder,
                     focusedTextColor = Color.White,
                     unfocusedTextColor = Color.White,
@@ -280,7 +281,7 @@ fun InscribeChapterSheet(
                 label = { Text("Short Synopsis / Hook (Optional)", color = Color.Gray) },
                 maxLines = 2,
                 colors = OutlinedTextFieldDefaults.colors(
-                    focusedBorderColor = PortalCyan,
+                    focusedBorderColor = PortalRedLightning,
                     unfocusedBorderColor = VoidBorder,
                     focusedTextColor = Color.White,
                     unfocusedTextColor = Color.White,
@@ -305,7 +306,7 @@ fun InscribeChapterSheet(
                 maxLines = 16,
                 isError = contentError,
                 colors = OutlinedTextFieldDefaults.colors(
-                    focusedBorderColor = PortalCyan,
+                    focusedBorderColor = PortalRedLightning,
                     unfocusedBorderColor = VoidBorder,
                     focusedTextColor = Color.White,
                     unfocusedTextColor = Color.White,
@@ -335,7 +336,7 @@ fun InscribeChapterSheet(
                 label = { Text("Author Note / Message to Readers (Optional)", color = Color.Gray) },
                 maxLines = 3,
                 colors = OutlinedTextFieldDefaults.colors(
-                    focusedBorderColor = PortalCyan,
+                    focusedBorderColor = PortalRedLightning,
                     unfocusedBorderColor = VoidBorder,
                     focusedTextColor = Color.White,
                     unfocusedTextColor = Color.White,
@@ -385,8 +386,8 @@ fun InscribeChapterSheet(
                         )
                     },
                     colors = ButtonDefaults.buttonColors(
-                        containerColor = PortalCyan,
-                        contentColor = VoidDark
+                        containerColor = PortalRedLightning,
+                        contentColor = Color.White
                     ),
                     shape = RoundedCornerShape(14.dp),
                     modifier = Modifier

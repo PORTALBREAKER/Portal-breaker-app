@@ -34,15 +34,16 @@ import androidx.compose.ui.graphics.drawscope.Fill
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import com.example.ui.theme.PortalCyan
+import com.example.ui.theme.PortalCrimson
 import com.example.ui.theme.PortalGold
-import com.example.ui.theme.PortalPurple
+import com.example.ui.theme.PortalRedLightning
+import com.example.ui.theme.PortalRuby
 import com.example.ui.theme.VoidCard
 import com.example.ui.theme.VoidDark
 
 /**
  * Premium iOS-grade "P" with integrated electric Thunderbolt (⚡) Logo.
- * Designed with geometric precision, frosted obsidian glass, and electric plasma glow.
+ * Red Lightning Edition: Designed with geometric precision, frosted obsidian glass, and crimson plasma glow.
  */
 @Composable
 fun PortalThunderboltLogo(
@@ -76,14 +77,14 @@ fun PortalThunderboltLogo(
     Box(
         modifier = modifier
             .size(size)
-            .shadow(elevation = 8.dp, shape = shape, spotColor = PortalCyan.copy(alpha = 0.35f))
+            .shadow(elevation = 8.dp, shape = shape, spotColor = PortalRedLightning.copy(alpha = 0.45f))
             .clip(shape)
             .background(
                 brush = Brush.verticalGradient(
                     listOf(
-                        Color(0xFF161E30),
-                        Color(0xFF090D18),
-                        Color(0xFF04060B)
+                        Color(0xFF240E14),
+                        Color(0xFF14080B),
+                        Color(0xFF070406)
                     )
                 )
             )
@@ -91,9 +92,9 @@ fun PortalThunderboltLogo(
                 width = 1.dp,
                 brush = Brush.linearGradient(
                     listOf(
-                        PortalCyan.copy(alpha = 0.85f),
-                        PortalPurple.copy(alpha = 0.5f),
-                        Color(0x22FFFFFF)
+                        PortalRedLightning.copy(alpha = 0.90f),
+                        PortalCrimson.copy(alpha = 0.6f),
+                        Color(0x33FF6B81)
                     ),
                     start = Offset(0f, 0f),
                     end = Offset(100f, 100f)
@@ -107,15 +108,15 @@ fun PortalThunderboltLogo(
             val w = this.size.width
             val h = this.size.height
 
-            // Ambient electric aura
+            // Ambient electric aura - Red Lightning
             drawCircle(
                 brush = Brush.radialGradient(
                     colors = listOf(
-                        PortalCyan.copy(alpha = 0.25f * pulse),
+                        PortalRedLightning.copy(alpha = 0.35f * pulse),
                         Color.Transparent
                     ),
                     center = Offset(w * 0.5f, h * 0.5f),
-                    radius = w * 0.6f
+                    radius = w * 0.65f
                 )
             )
 
@@ -143,14 +144,14 @@ fun PortalThunderboltLogo(
                 close()
             }
 
-            // Draw "P" body with platinum-cyan gradient
+            // Draw "P" body with platinum-ruby gradient
             drawPath(
                 path = pPath,
                 brush = Brush.verticalGradient(
                     listOf(
                         Color.White,
-                        Color(0xFFE2E8F0),
-                        Color(0xFF94A3B8)
+                        Color(0xFFFEE2E2),
+                        Color(0xFFFCA5A5)
                     )
                 ),
                 style = Fill
@@ -170,11 +171,11 @@ fun PortalThunderboltLogo(
             }
             drawPath(
                 path = pInnerHole,
-                color = Color(0xFF0C101A),
+                color = Color(0xFF14080B),
                 style = Fill
             )
 
-            // 2. High-Voltage Thunderbolt (⚡) slicing diagonally through P
+            // 2. High-Voltage Red Thunderbolt (⚡) slicing diagonally through P
             val boltGlowPath = Path().apply {
                 moveTo(w * 0.66f, h * 0.12f)  // Top lightning apex
                 lineTo(w * 0.44f, h * 0.46f)  // Inward strike
@@ -188,7 +189,7 @@ fun PortalThunderboltLogo(
             // Thunderbolt outer neon plasma stroke
             drawPath(
                 path = boltGlowPath,
-                color = PortalCyan.copy(alpha = 0.6f * pulse),
+                color = PortalRedLightning.copy(alpha = 0.75f * pulse),
                 style = Stroke(
                     width = 2.5.dp.toPx(),
                     cap = StrokeCap.Round,
@@ -196,14 +197,14 @@ fun PortalThunderboltLogo(
                 )
             )
 
-            // Thunderbolt core fill (Electric Gold & Cyan)
+            // Thunderbolt core fill (Electric Gold & Crimson Red Lightning)
             drawPath(
                 path = boltGlowPath,
                 brush = Brush.linearGradient(
                     listOf(
                         Color(0xFFFFF066),
                         PortalGold,
-                        PortalCyan
+                        PortalRedLightning
                     ),
                     start = Offset(w * 0.66f, h * 0.12f),
                     end = Offset(w * 0.38f, h * 0.86f)

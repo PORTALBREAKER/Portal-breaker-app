@@ -60,8 +60,9 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
-import com.example.ui.theme.PortalCyan
+import com.example.ui.theme.PortalCrimson
 import com.example.ui.theme.PortalPurple
+import com.example.ui.theme.PortalRedLightning
 import com.example.ui.theme.PortalSky
 import com.example.ui.theme.VoidBorder
 import com.example.ui.theme.VoidCard
@@ -85,8 +86,8 @@ fun SecretKeypadDialog(
                 .glassmorphic(
                     shape = RoundedCornerShape(24.dp),
                     backgroundColor = VoidDark.copy(alpha = 0.94f),
-                    borderColor = PortalCyan.copy(alpha = 0.5f),
-                    secondaryBorderColor = PortalPurple.copy(alpha = 0.4f)
+                    borderColor = PortalRedLightning.copy(alpha = 0.6f),
+                    secondaryBorderColor = PortalCrimson.copy(alpha = 0.4f)
                 )
                 .padding(24.dp)
         ) {
@@ -122,19 +123,19 @@ fun SecretKeypadDialog(
                         .background(
                             Brush.radialGradient(
                                 listOf(
-                                    PortalCyan.copy(alpha = 0.35f),
+                                    PortalRedLightning.copy(alpha = 0.35f),
                                     PortalPurple.copy(alpha = 0.15f),
                                     Color.Transparent
                                 )
                             )
                         )
-                        .border(1.5.dp, PortalCyan, CircleShape),
+                        .border(1.5.dp, PortalRedLightning, CircleShape),
                     contentAlignment = Alignment.Center
                 ) {
                     Icon(
                         imageVector = Icons.Default.Lock,
                         contentDescription = "Void Lock",
-                        tint = PortalCyan,
+                        tint = PortalRedLightning,
                         modifier = Modifier.size(32.dp)
                     )
                 }
@@ -144,7 +145,7 @@ fun SecretKeypadDialog(
                 Text(
                     text = "AUTHOR AUTHENTICATION",
                     style = MaterialTheme.typography.labelLarge.copy(
-                        color = PortalCyan,
+                        color = PortalRedLightning,
                         letterSpacing = 2.sp,
                         fontWeight = FontWeight.Bold
                     )
@@ -192,7 +193,7 @@ fun SecretKeypadDialog(
                     }),
                     isError = isError,
                     colors = OutlinedTextFieldDefaults.colors(
-                        focusedBorderColor = PortalCyan,
+                        focusedBorderColor = PortalRedLightning,
                         unfocusedBorderColor = VoidBorder,
                         focusedTextColor = Color.White,
                         unfocusedTextColor = Color.White,
@@ -226,8 +227,8 @@ fun SecretKeypadDialog(
                         }
                     },
                     colors = ButtonDefaults.buttonColors(
-                        containerColor = PortalCyan,
-                        contentColor = VoidDark
+                        containerColor = PortalRedLightning,
+                        contentColor = Color.White
                     ),
                     shape = RoundedCornerShape(14.dp),
                     modifier = Modifier

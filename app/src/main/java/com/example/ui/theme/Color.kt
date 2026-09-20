@@ -9,16 +9,21 @@ val VoidSurfaceVariant = Color(0xFF161E30)
 val VoidCard = Color(0xFF131A29)
 val VoidBorder = Color(0xFF232D42)
 
-// Neon Accents - Spatial energy rifts & Crimson Lightning
-val PortalCyan = Color(0xFF00F5D4)
-val PortalCyanGlow = Color(0x3300F5D4)
-val PortalSky = Color(0xFF38BDF8)
-val PortalViolet = Color(0xFF8B5CF6)
-val PortalPurple = Color(0xFF7928CA)
-val PortalGold = Color(0xFFFBBF24)
+// Neon Accents - Spatial energy rifts & Red Lightning Edition
+val PortalRedLightning = Color(0xFFFF1E44)
+val PortalRedLightningGlow = Color(0x33FF1E44)
 val PortalCrimson = Color(0xFFFF2A55)
 val PortalCrimsonGlow = Color(0x33FF2A55)
-val PortalRedLightning = Color(0xFFFF1E44)
+val PortalRuby = Color(0xFFFF3366)
+val PortalFlame = Color(0xFFFF5252)
+
+// Legacy alias / complementary accents
+val PortalCyan = Color(0xFFFF1E44) // Shifted to Red Lightning
+val PortalCyanGlow = Color(0x33FF1E44)
+val PortalSky = Color(0xFFFF6B81)
+val PortalViolet = Color(0xFF991B1B)
+val PortalPurple = Color(0xFF7F1D1D)
+val PortalGold = Color(0xFFFBBF24)
 
 // Text Colors
 val TextPrimaryDark = Color(0xFFF1F5F9)
