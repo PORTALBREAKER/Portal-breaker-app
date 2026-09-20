@@ -6,71 +6,81 @@
     android:viewportWidth="108"
     android:viewportHeight="108">
 
-    <!-- Stylized "P" Letter Body -->
+    <!-- Stylized Geometric "P" Letter Body with Dimensional Chiseled Finish -->
     <!-- Vertical stem -->
     <path
-        android:pathData="M35,28 L47,28 L47,80 L35,80 Z"
-        android:strokeWidth="1.5"
-        android:strokeColor="#00F5D4">
+        android:pathData="M34,26 L46,26 L46,82 L34,82 Z"
+        android:strokeWidth="1.2"
+        android:strokeColor="#55FF183D">
         <aapt:attr name="android:fillColor">
             <gradient
-                android:startX="35"
-                android:startY="28"
-                android:endX="47"
-                android:endY="80"
+                android:startX="34"
+                android:startY="26"
+                android:endX="46"
+                android:endY="82"
                 android:type="linear">
                 <item android:offset="0.0" android:color="#FFFFFF" />
-                <item android:offset="1.0" android:color="#CBD5E1" />
+                <item android:offset="0.6" android:color="#E2E8F0" />
+                <item android:offset="1.0" android:color="#94A3B8" />
             </gradient>
         </aapt:attr>
     </path>
 
-    <!-- Upper loop of P -->
+    <!-- Upper loop of P with sharp geometric cut -->
     <path
-        android:pathData="M44,28 L64,28 C76,28 76,54 64,54 L44,54 Z"
-        android:strokeWidth="1.5"
-        android:strokeColor="#00F5D4">
+        android:pathData="M43,26 L64,26 C76,26 77,53 64,53 L43,53 Z"
+        android:strokeWidth="1.2"
+        android:strokeColor="#55FF183D">
         <aapt:attr name="android:fillColor">
             <gradient
-                android:startX="44"
-                android:startY="28"
-                android:endX="76"
-                android:endY="54"
+                android:startX="43"
+                android:startY="26"
+                android:endX="77"
+                android:endY="53"
                 android:type="linear">
                 <item android:offset="0.0" android:color="#FFFFFF" />
-                <item android:offset="1.0" android:color="#94A3B8" />
+                <item android:offset="0.5" android:color="#CBD5E1" />
+                <item android:offset="1.0" android:color="#64748B" />
             </gradient>
         </aapt:attr>
     </path>
 
     <!-- Negative space cutout inside P loop -->
     <path
-        android:pathData="M47,36 L62,36 C69,36 69,46 62,46 L47,46 Z"
-        android:fillColor="#090D18" />
+        android:pathData="M46,34 L62,34 C68,34 68,45 62,45 L46,45 Z"
+        android:fillColor="#080A0F" />
 
-    <!-- Electric Thunderbolt slicing across the P (⚡) -->
-    <!-- Outer Glow -->
+    <!-- Red Lightning Bolt slicing dynamically through the Portal P (⚡) -->
+    <!-- Outer Crimson Energy Aura -->
     <path
-        android:pathData="M69,20 L47,52 L59,52 L39,88 L53,56 L43,56 Z"
-        android:strokeWidth="3"
-        android:strokeColor="#4000F5D4"
-        android:strokeLineJoin="miter" />
+        android:pathData="M70,18 L46,50 L58,50 L38,90 L53,55 L42,55 Z"
+        android:strokeWidth="4"
+        android:strokeColor="#40FF183D"
+        android:strokeLineJoin="round" />
 
-    <!-- Thunderbolt Core -->
+    <!-- Secondary Red Lightning Glow -->
     <path
-        android:pathData="M69,20 L47,52 L59,52 L39,88 L53,56 L43,56 Z"
-        android:strokeWidth="1"
-        android:strokeColor="#00F5D4">
+        android:pathData="M70,18 L46,50 L58,50 L38,90 L53,55 L42,55 Z"
+        android:strokeWidth="2"
+        android:strokeColor="#80FF2348"
+        android:strokeLineJoin="round" />
+
+    <!-- High-Voltage White-Hot & Red Core Lightning Bolt -->
+    <path
+        android:pathData="M70,18 L46,50 L58,50 L38,90 L53,55 L42,55 Z"
+        android:strokeWidth="0.8"
+        android:strokeColor="#FFFFFF">
         <aapt:attr name="android:fillColor">
             <gradient
-                android:startX="69"
-                android:startY="20"
-                android:endX="39"
-                android:endY="88"
+                android:startX="70"
+                android:startY="18"
+                android:endX="38"
+                android:endY="90"
                 android:type="linear">
-                <item android:offset="0.0" android:color="#FFF275" />
-                <item android:offset="0.5" android:color="#FBBF24" />
-                <item android:offset="1.0" android:color="#00F5D4" />
+                <item android:offset="0.0" android:color="#FFFFFF" />
+                <item android:offset="0.3" android:color="#FF6B81" />
+                <item android:offset="0.7" android:color="#FF183D" />
+                <item android:offset="1.0" android:color="#D90E32" />
             </gradient>
         </aapt:attr>
     </path>

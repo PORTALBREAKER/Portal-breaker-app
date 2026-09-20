@@ -5,6 +5,7 @@
     android:height="108dp"
     android:viewportWidth="108"
     android:viewportHeight="108">
+    <!-- Deep obsidian void background with subtle diagonal red gradient -->
     <path
         android:pathData="M0,0h108v108h-108z">
         <aapt:attr name="android:fillColor">
@@ -14,27 +15,43 @@
                 android:endX="108"
                 android:endY="108"
                 android:type="linear">
-                <item android:offset="0.0" android:color="#0A0C16" />
-                <item android:offset="0.5" android:color="#140D2B" />
-                <item android:offset="1.0" android:color="#0D1B2A" />
+                <item android:offset="0.0" android:color="#050507" />
+                <item android:offset="0.5" android:color="#0F090E" />
+                <item android:offset="1.0" android:color="#1A0A12" />
             </gradient>
         </aapt:attr>
     </path>
-    <!-- Subtle portal energy orbital rings -->
+    <!-- Dimensional Rift orbital rings with Red Lightning & Crimson energy -->
     <path
         android:fillColor="#00000000"
         android:pathData="M54,54m-42,0a42,42 0 1,1 84,0a42,42 0 1,1 -84,0"
-        android:strokeWidth="1.2"
-        android:strokeColor="#1E3A8A" />
-    <path
-        android:fillColor="#00000000"
-        android:pathData="M54,54m-32,0a32,32 0 1,1 64,0a32,32 0 1,1 -64,0"
         android:strokeWidth="0.8"
-        android:strokeColor="#3B82F6" />
+        android:strokeColor="#33FF183D" />
     <path
         android:fillColor="#00000000"
-        android:pathData="M54,54m-22,0a22,22 0 1,1 44,0a22,22 0 1,1 -44,0"
-        android:strokeWidth="1.0"
-        android:strokeColor="#7C3AED" />
+        android:pathData="M54,54m-34,0a34,34 0 1,1 68,0a34,34 0 1,1 -68,0"
+        android:strokeWidth="1.2"
+        android:strokeColor="#55D90E32" />
+    <path
+        android:fillColor="#00000000"
+        android:pathData="M54,54m-24,0a24,24 0 1,1 48,0a24,24 0 1,1 -48,0"
+        android:strokeWidth="1.5"
+        android:strokeColor="#88FF2348" />
+    <!-- Subtle cosmic energy center core -->
+    <path
+        android:pathData="M54,54m-12,0a12,12 0 1,1 24,0a12,12 0 1,1 -24,0">
+        <aapt:attr name="android:fillColor">
+            <gradient
+                android:startX="42"
+                android:startY="42"
+                android:endX="66"
+                android:endY="66"
+                android:type="radial"
+                android:gradientRadius="14">
+                <item android:offset="0.0" android:color="#33FF183D" />
+                <item android:offset="1.0" android:color="#00000000" />
+            </gradient>
+        </aapt:attr>
+    </path>
 </vector>
 

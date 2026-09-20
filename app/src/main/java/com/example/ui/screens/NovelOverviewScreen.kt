@@ -116,11 +116,16 @@ import com.example.data.remote.AuthUserState
 import com.example.ui.AppTab
 import com.example.ui.LibrarySubTab
 import com.example.ui.components.NovelCoverCard
+import com.example.ui.components.PortalBreakerWordmark
 import com.example.ui.components.PortalThunderboltLogo
 import com.example.ui.theme.PortalCosmicBackground
+import com.example.ui.theme.PortalCrimson
 import com.example.ui.theme.PortalCyan
+import com.example.ui.theme.PortalFlame
 import com.example.ui.theme.PortalGold
 import com.example.ui.theme.PortalPurple
+import com.example.ui.theme.PortalRedLightning
+import com.example.ui.theme.PortalRuby
 import com.example.ui.theme.PortalSky
 import com.example.ui.theme.VoidBorder
 import com.example.ui.theme.VoidCard
@@ -197,7 +202,7 @@ fun NovelOverviewScreen(
                     horizontalArrangement = Arrangement.SpaceBetween,
                     verticalAlignment = Alignment.CenterVertically
                 ) {
-                    // App Emblem & Title (Secret 4-tap trigger on the P-Thunderbolt logo only)
+                    // App Emblem & Custom Wordmark (Secret 4-tap trigger on the P-Thunderbolt logo only)
                     Row(
                         verticalAlignment = Alignment.CenterVertically,
                         modifier = Modifier
@@ -205,7 +210,7 @@ fun NovelOverviewScreen(
                             .padding(vertical = 4.dp)
                     ) {
                         PortalThunderboltLogo(
-                            size = if (isCompact) 36.dp else 40.dp,
+                            size = if (isCompact) 38.dp else 44.dp,
                             onClick = {
                                 val now = System.currentTimeMillis()
                                 if (now - lastTapTimestamp < 1500L) {
@@ -223,51 +228,38 @@ fun NovelOverviewScreen(
                             modifier = Modifier.testTag("secret_portal_thunderbolt_logo")
                         )
                         Spacer(modifier = Modifier.width(if (isCompact) 8.dp else 12.dp))
-                        Column {
-                            Text(
-                                text = "PORTAL BREAKER",
-                                style = (if (isCompact) MaterialTheme.typography.titleSmall else MaterialTheme.typography.titleMedium).copy(
-                                    fontWeight = FontWeight.Black,
-                                    letterSpacing = if (isCompact) 1.sp else 1.5.sp,
-                                    color = Color.White
-                                ),
-                                maxLines = 1,
-                                overflow = TextOverflow.Ellipsis
-                            )
-                            Text(
-                                text = "Official Webnovel Edition",
-                                style = MaterialTheme.typography.labelSmall.copy(
-                                    color = PortalSky,
-                                    fontSize = if (isCompact) 10.sp else 11.sp
-                                ),
-                                maxLines = 1,
-                                overflow = TextOverflow.Ellipsis
-                            )
-                        }
+                        PortalBreakerWordmark(
+                            isCompact = isCompact
+                        )
                     }
 
-                    // Action Icons (Cloud Sync + Reading Settings)
+                    // Action Icons (Cloud Sync + Reading Settings) with polished glass containers
                     Row(
                         verticalAlignment = Alignment.CenterVertically,
-                        horizontalArrangement = Arrangement.End
+                        horizontalArrangement = Arrangement.spacedBy(4.dp)
                     ) {
                         // Cloud Sync Account Button
                         IconButton(
                             onClick = { showCloudDialog = true },
-                            modifier = Modifier.size(if (isCompact) 38.dp else 44.dp).testTag("open_cloud_sync_button")
+                            modifier = Modifier
+                                .size(if (isCompact) 38.dp else 42.dp)
+                                .clip(RoundedCornerShape(12.dp))
+                                .background(VoidSurfaceVariant.copy(alpha = 0.7f))
+                                .border(1.dp, VoidBorder, RoundedCornerShape(12.dp))
+                                .testTag("open_cloud_sync_button")
                         ) {
                             if (isCloudSyncing) {
                                 CircularProgressIndicator(
                                     modifier = Modifier.size(18.dp),
-                                    color = PortalCyan,
+                                    color = PortalRedLightning,
                                     strokeWidth = 2.dp
                                 )
                             } else {
                                 Icon(
                                     imageVector = if (currentUserId.isNotBlank()) Icons.Default.CloudDone else Icons.Default.CloudQueue,
                                     contentDescription = "Cloud Sync",
-                                    tint = if (currentUserId.isNotBlank()) PortalCyan else Color.Gray,
-                                    modifier = Modifier.size(if (isCompact) 20.dp else 24.dp)
+                                    tint = if (currentUserId.isNotBlank()) PortalRedLightning else Color(0xFF94A3B8),
+                                    modifier = Modifier.size(if (isCompact) 18.dp else 20.dp)
                                 )
                             }
                         }
@@ -275,13 +267,18 @@ fun NovelOverviewScreen(
                         // Reading Settings Button
                         IconButton(
                             onClick = onOpenSettings,
-                            modifier = Modifier.size(if (isCompact) 38.dp else 44.dp).testTag("open_settings_button")
+                            modifier = Modifier
+                                .size(if (isCompact) 38.dp else 42.dp)
+                                .clip(RoundedCornerShape(12.dp))
+                                .background(VoidSurfaceVariant.copy(alpha = 0.7f))
+                                .border(1.dp, VoidBorder, RoundedCornerShape(12.dp))
+                                .testTag("open_settings_button")
                         ) {
                             Icon(
                                 imageVector = Icons.Default.TextFields,
                                 contentDescription = "Reading Settings",
-                                tint = PortalCyan,
-                                modifier = Modifier.size(if (isCompact) 20.dp else 24.dp)
+                                tint = Color.White,
+                                modifier = Modifier.size(if (isCompact) 18.dp else 20.dp)
                             )
                         }
                     }
@@ -300,9 +297,9 @@ fun NovelOverviewScreen(
                         .padding(horizontal = 16.dp, vertical = 6.dp)
                         .glassmorphic(
                             shape = RoundedCornerShape(16.dp),
-                            backgroundColor = PortalPurple.copy(alpha = 0.25f),
-                            borderColor = PortalCyan,
-                            secondaryBorderColor = PortalPurple
+                            backgroundColor = Color(0xFF1F080F),
+                            borderColor = PortalRedLightning.copy(alpha = 0.7f),
+                            secondaryBorderColor = PortalCrimson.copy(alpha = 0.4f)
                         )
                         .padding(horizontal = 14.dp, vertical = 10.dp)
                 ) {
@@ -324,7 +321,7 @@ fun NovelOverviewScreen(
                                 Icon(
                                     imageVector = Icons.Default.LockOpen,
                                     contentDescription = null,
-                                    tint = PortalCyan,
+                                    tint = PortalRedLightning,
                                     modifier = Modifier.size(18.dp)
                                 )
                                 Spacer(modifier = Modifier.width(8.dp))
@@ -332,7 +329,7 @@ fun NovelOverviewScreen(
                                     Text(
                                         text = "AUTHOR SANCTUARY",
                                         style = MaterialTheme.typography.labelSmall.copy(
-                                            color = PortalCyan,
+                                            color = PortalRedLightning,
                                             fontWeight = FontWeight.Bold,
                                             letterSpacing = 1.sp
                                         )
@@ -346,7 +343,7 @@ fun NovelOverviewScreen(
                                         Box(
                                             modifier = Modifier
                                                 .clip(RoundedCornerShape(4.dp))
-                                                .background(PortalCyan.copy(alpha = 0.2f))
+                                                .background(PortalRedLightning.copy(alpha = 0.2f))
                                                 .clickable { showCloudDialog = true }
                                                 .padding(horizontal = 5.dp, vertical = 2.dp)
                                         ) {
@@ -354,14 +351,14 @@ fun NovelOverviewScreen(
                                                 Icon(
                                                     imageVector = Icons.Default.CloudDone,
                                                     contentDescription = null,
-                                                    tint = PortalCyan,
+                                                    tint = PortalRedLightning,
                                                     modifier = Modifier.size(11.dp)
                                                 )
                                                 Spacer(modifier = Modifier.width(3.dp))
                                                 Text(
                                                     text = "Cloud Sync",
                                                     style = MaterialTheme.typography.labelSmall.copy(
-                                                        color = PortalCyan,
+                                                        color = PortalRedLightning,
                                                         fontSize = 9.sp,
                                                         fontWeight = FontWeight.Bold
                                                     )
@@ -377,8 +374,8 @@ fun NovelOverviewScreen(
                                 Button(
                                     onClick = onOpenInscribeNew,
                                     colors = ButtonDefaults.buttonColors(
-                                        containerColor = PortalCyan,
-                                        contentColor = VoidDark
+                                        containerColor = PortalRedLightning,
+                                        contentColor = Color.White
                                     ),
                                     shape = RoundedCornerShape(10.dp),
                                     contentPadding = androidx.compose.foundation.layout.PaddingValues(horizontal = 10.dp, vertical = 6.dp),
@@ -423,7 +420,7 @@ fun NovelOverviewScreen(
                             .padding(horizontal = 16.dp, vertical = 4.dp)
                             .clip(RoundedCornerShape(12.dp))
                             .background(VoidSurface)
-                            .border(1.dp, PortalCyan.copy(alpha = 0.4f), RoundedCornerShape(12.dp))
+                            .border(1.dp, PortalRedLightning.copy(alpha = 0.5f), RoundedCornerShape(12.dp))
                             .padding(horizontal = 12.dp, vertical = 8.dp)
                     ) {
                         Row(
@@ -438,7 +435,7 @@ fun NovelOverviewScreen(
                                 Icon(
                                     imageVector = Icons.Default.CloudSync,
                                     contentDescription = null,
-                                    tint = PortalCyan,
+                                    tint = PortalRedLightning,
                                     modifier = Modifier.size(16.dp)
                                 )
                                 Spacer(modifier = Modifier.width(8.dp))
@@ -518,13 +515,14 @@ fun NovelOverviewScreen(
                 }
             }
 
-            // Bottom Navigation Bar
+            // Bottom Navigation Bar - Executive Obsidian Glass with Red Lightning Accents
             NavigationBar(
-                containerColor = VoidCard,
-                tonalElevation = 8.dp,
+                containerColor = VoidSurface.copy(alpha = 0.95f),
+                tonalElevation = 12.dp,
                 modifier = Modifier
                     .fillMaxWidth()
                     .navigationBarsPadding()
+                    .border(1.dp, VoidBorder.copy(alpha = 0.5f))
                     .testTag("app_bottom_navigation")
             ) {
                 NavigationBarItem(
@@ -536,13 +534,19 @@ fun NovelOverviewScreen(
                             contentDescription = "Home"
                         )
                     },
-                    label = { Text("Home", fontSize = 11.sp) },
+                    label = {
+                        Text(
+                            "Home",
+                            fontSize = 11.sp,
+                            fontWeight = if (selectedTab == AppTab.HOME) FontWeight.Bold else FontWeight.Normal
+                        )
+                    },
                     colors = NavigationBarItemDefaults.colors(
-                        selectedIconColor = VoidDark,
-                        selectedTextColor = PortalCyan,
-                        indicatorColor = PortalCyan,
-                        unselectedIconColor = Color.Gray,
-                        unselectedTextColor = Color.Gray
+                        selectedIconColor = Color.White,
+                        selectedTextColor = PortalRedLightning,
+                        indicatorColor = PortalRedLightning.copy(alpha = 0.28f),
+                        unselectedIconColor = Color(0xFF64748B),
+                        unselectedTextColor = Color(0xFF64748B)
                     ),
                     modifier = Modifier.testTag("nav_tab_home")
                 )
@@ -556,13 +560,19 @@ fun NovelOverviewScreen(
                             contentDescription = "Chapters"
                         )
                     },
-                    label = { Text("Chapters", fontSize = 11.sp) },
+                    label = {
+                        Text(
+                            "Chapters",
+                            fontSize = 11.sp,
+                            fontWeight = if (selectedTab == AppTab.CHAPTERS) FontWeight.Bold else FontWeight.Normal
+                        )
+                    },
                     colors = NavigationBarItemDefaults.colors(
-                        selectedIconColor = VoidDark,
-                        selectedTextColor = PortalCyan,
-                        indicatorColor = PortalCyan,
-                        unselectedIconColor = Color.Gray,
-                        unselectedTextColor = Color.Gray
+                        selectedIconColor = Color.White,
+                        selectedTextColor = PortalRedLightning,
+                        indicatorColor = PortalRedLightning.copy(alpha = 0.28f),
+                        unselectedIconColor = Color(0xFF64748B),
+                        unselectedTextColor = Color(0xFF64748B)
                     ),
                     modifier = Modifier.testTag("nav_tab_chapters")
                 )
@@ -576,13 +586,19 @@ fun NovelOverviewScreen(
                             contentDescription = "Library"
                         )
                     },
-                    label = { Text("Library", fontSize = 11.sp) },
+                    label = {
+                        Text(
+                            "Library",
+                            fontSize = 11.sp,
+                            fontWeight = if (selectedTab == AppTab.LIBRARY) FontWeight.Bold else FontWeight.Normal
+                        )
+                    },
                     colors = NavigationBarItemDefaults.colors(
-                        selectedIconColor = VoidDark,
-                        selectedTextColor = PortalCyan,
-                        indicatorColor = PortalCyan,
-                        unselectedIconColor = Color.Gray,
-                        unselectedTextColor = Color.Gray
+                        selectedIconColor = Color.White,
+                        selectedTextColor = PortalRedLightning,
+                        indicatorColor = PortalRedLightning.copy(alpha = 0.28f),
+                        unselectedIconColor = Color(0xFF64748B),
+                        unselectedTextColor = Color(0xFF64748B)
                     ),
                     modifier = Modifier.testTag("nav_tab_library")
                 )
@@ -675,8 +691,8 @@ private fun HomeTabContent(
                     .fillMaxWidth()
                     .glassmorphic(
                         shape = RoundedCornerShape(24.dp),
-                        backgroundColor = VoidSurface.copy(alpha = 0.85f),
-                        borderColor = PortalCyan.copy(alpha = 0.35f)
+                        backgroundColor = VoidSurface.copy(alpha = 0.92f),
+                        borderColor = PortalRedLightning.copy(alpha = 0.45f)
                     )
                     .padding(16.dp)
             ) {
@@ -697,21 +713,31 @@ private fun HomeTabContent(
 
                     // Novel Details & Metadata
                     Column(modifier = Modifier.weight(1f)) {
-                        Text(
-                            text = "PORTAL BREAKER",
-                            style = (if (isCompactScreen) MaterialTheme.typography.titleMedium else MaterialTheme.typography.titleLarge).copy(
-                                color = Color.White,
-                                fontWeight = FontWeight.Black,
-                                letterSpacing = 1.sp
+                        Row(verticalAlignment = Alignment.CenterVertically) {
+                            Text(
+                                text = "PORTAL BREAKER",
+                                style = (if (isCompactScreen) MaterialTheme.typography.titleMedium else MaterialTheme.typography.titleLarge).copy(
+                                    color = Color.White,
+                                    fontWeight = FontWeight.Black,
+                                    letterSpacing = 1.sp
+                                )
                             )
-                        )
-                        Text(
-                            text = "Author: Arun",
-                            style = MaterialTheme.typography.bodyMedium.copy(
-                                color = PortalSky,
-                                fontWeight = FontWeight.Medium
+                        }
+                        Row(verticalAlignment = Alignment.CenterVertically) {
+                            Text(
+                                text = "Author: ",
+                                style = MaterialTheme.typography.bodyMedium.copy(
+                                    color = Color(0xFF94A3B8)
+                                )
                             )
-                        )
+                            Text(
+                                text = "Arun",
+                                style = MaterialTheme.typography.bodyMedium.copy(
+                                    color = PortalGold,
+                                    fontWeight = FontWeight.Bold
+                                )
+                            )
+                        }
 
                         Spacer(modifier = Modifier.height(6.dp))
 
@@ -722,22 +748,19 @@ private fun HomeTabContent(
                             listOf("Dark Fantasy", "LitRPG", "Sci-Fi").forEach { tag ->
                                 Box(
                                     modifier = Modifier
-                                        .glassmorphic(
-                                            shape = RoundedCornerShape(6.dp),
-                                            backgroundColor = PortalPurple.copy(alpha = 0.2f),
-                                            borderColor = PortalPurple.copy(alpha = 0.5f),
-                                            borderWidth = 0.5.dp
-                                        )
+                                        .clip(RoundedCornerShape(6.dp))
+                                        .background(VoidSurfaceVariant)
+                                        .border(0.5.dp, PortalRedLightning.copy(alpha = 0.35f), RoundedCornerShape(6.dp))
                                         .padding(horizontal = 6.dp, vertical = 2.dp)
-                                    ) {
-                                        Text(
-                                            text = tag,
-                                            style = MaterialTheme.typography.labelSmall.copy(
-                                                color = Color.LightGray,
-                                                fontSize = if (isCompactScreen) 9.sp else 10.sp
-                                            )
+                                ) {
+                                    Text(
+                                        text = tag,
+                                        style = MaterialTheme.typography.labelSmall.copy(
+                                            color = Color(0xFFE2E8F0),
+                                            fontSize = if (isCompactScreen) 9.sp else 10.sp
                                         )
-                                    }
+                                    )
+                                }
                             }
                         }
 
@@ -763,7 +786,7 @@ private fun HomeTabContent(
                         ) {
                             Text(
                                 text = "${allChapters.size} Chs",
-                                style = MaterialTheme.typography.labelSmall.copy(color = PortalCyan, fontWeight = FontWeight.SemiBold)
+                                style = MaterialTheme.typography.labelSmall.copy(color = PortalRedLightning, fontWeight = FontWeight.Bold)
                             )
                             Text(text = "•", color = Color.DarkGray)
                             Text(
@@ -791,7 +814,7 @@ private fun HomeTabContent(
                         .glassmorphic(
                             shape = RoundedCornerShape(18.dp),
                             backgroundColor = VoidCard.copy(alpha = 0.9f),
-                            borderColor = PortalCyan.copy(alpha = 0.3f)
+                            borderColor = PortalRedLightning.copy(alpha = 0.3f)
                         )
                         .padding(18.dp)
                 ) {
@@ -803,13 +826,13 @@ private fun HomeTabContent(
                             modifier = Modifier
                                 .size(48.dp)
                                 .clip(CircleShape)
-                                .background(PortalCyan.copy(alpha = 0.15f)),
+                                .background(PortalRedLightning.copy(alpha = 0.15f)),
                             contentAlignment = Alignment.Center
                         ) {
                             Icon(
                                 imageVector = Icons.Default.MenuBook,
                                 contentDescription = null,
-                                tint = PortalCyan,
+                                tint = PortalRedLightning,
                                 modifier = Modifier.size(24.dp)
                             )
                         }
@@ -842,8 +865,8 @@ private fun HomeTabContent(
                             Button(
                                 onClick = onOpenInscribeNew,
                                 colors = ButtonDefaults.buttonColors(
-                                    containerColor = PortalCyan,
-                                    contentColor = VoidDark
+                                    containerColor = PortalRedLightning,
+                                    contentColor = Color.White
                                 ),
                                 shape = RoundedCornerShape(12.dp),
                                 modifier = Modifier.testTag("empty_home_inscribe_button")
@@ -872,8 +895,8 @@ private fun HomeTabContent(
                         .fillMaxWidth()
                         .glassmorphic(
                             shape = RoundedCornerShape(18.dp),
-                            backgroundColor = VoidCard.copy(alpha = 0.9f),
-                            borderColor = PortalCyan.copy(alpha = 0.4f)
+                            backgroundColor = VoidCard.copy(alpha = 0.95f),
+                            borderColor = PortalRedLightning.copy(alpha = 0.5f)
                         )
                         .clickable { onOpenChapter(targetChapter.id) }
                         .padding(16.dp)
@@ -889,14 +912,14 @@ private fun HomeTabContent(
                                 Icon(
                                     imageVector = Icons.Default.MenuBook,
                                     contentDescription = null,
-                                    tint = PortalCyan,
+                                    tint = PortalRedLightning,
                                     modifier = Modifier.size(16.dp)
                                 )
                                 Spacer(modifier = Modifier.width(6.dp))
                                 Text(
                                     text = if (lastReadChapter != null) "CONTINUE READING" else "START READING",
                                     style = MaterialTheme.typography.labelSmall.copy(
-                                        color = PortalCyan,
+                                        color = PortalRedLightning,
                                         fontWeight = FontWeight.Bold,
                                         letterSpacing = 1.sp
                                     )
@@ -919,23 +942,27 @@ private fun HomeTabContent(
                                     .fillMaxWidth(0.85f)
                                     .height(4.dp)
                                     .clip(RoundedCornerShape(2.dp)),
-                                color = PortalCyan,
+                                color = PortalRedLightning,
                                 trackColor = VoidBorder
                             )
                         }
 
                         Box(
                             modifier = Modifier
-                                .size(42.dp)
+                                .size(44.dp)
                                 .clip(CircleShape)
-                                .background(PortalCyan)
+                                .background(
+                                    Brush.linearGradient(
+                                        listOf(PortalRedLightning, PortalCrimson)
+                                    )
+                                )
                                 .padding(4.dp),
                             contentAlignment = Alignment.Center
                         ) {
                             Icon(
                                 imageVector = Icons.Default.PlayArrow,
                                 contentDescription = "Resume Reading",
-                                tint = VoidDark,
+                                tint = Color.White,
                                 modifier = Modifier.size(24.dp)
                             )
                         }
@@ -961,12 +988,12 @@ private fun HomeTabContent(
                         .padding(12.dp)
                 ) {
                     Column {
-                        Text(text = "Completed", style = MaterialTheme.typography.labelSmall.copy(color = Color.Gray))
+                        Text(text = "Completed", style = MaterialTheme.typography.labelSmall.copy(color = Color(0xFF94A3B8)))
                         Spacer(modifier = Modifier.height(4.dp))
                         Text(
                             text = "$completedCount / ${allChapters.size}",
                             style = MaterialTheme.typography.titleMedium.copy(
-                                color = PortalCyan,
+                                color = PortalRedLightning,
                                 fontWeight = FontWeight.Bold
                             )
                         )
@@ -983,7 +1010,7 @@ private fun HomeTabContent(
                         .padding(12.dp)
                 ) {
                     Column {
-                        Text(text = "Bookmarked", style = MaterialTheme.typography.labelSmall.copy(color = Color.Gray))
+                        Text(text = "Bookmarked", style = MaterialTheme.typography.labelSmall.copy(color = Color(0xFF94A3B8)))
                         Spacer(modifier = Modifier.height(4.dp))
                         Text(
                             text = "$bookmarkedCount",
@@ -1005,7 +1032,7 @@ private fun HomeTabContent(
                         .padding(12.dp)
                 ) {
                     Column {
-                        Text(text = "Favorites", style = MaterialTheme.typography.labelSmall.copy(color = Color.Gray))
+                        Text(text = "Favorites", style = MaterialTheme.typography.labelSmall.copy(color = Color(0xFF94A3B8)))
                         Spacer(modifier = Modifier.height(4.dp))
                         Text(
                             text = "$favoritesCount",
@@ -1026,11 +1053,11 @@ private fun HomeTabContent(
                 onClick = onSwitchToChapters,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(50.dp)
+                    .height(52.dp)
                     .testTag("browse_all_chapters_button"),
                 colors = ButtonDefaults.buttonColors(
-                    containerColor = PortalCyan,
-                    contentColor = VoidDark
+                    containerColor = PortalRedLightning,
+                    contentColor = Color.White
                 ),
                 shape = RoundedCornerShape(14.dp)
             ) {
@@ -1072,39 +1099,57 @@ private fun ChaptersTabContent(
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                Text(
-                    text = "TABLE OF CONTENTS",
-                    style = MaterialTheme.typography.labelMedium.copy(
-                        color = PortalSky,
-                        fontWeight = FontWeight.Bold,
-                        letterSpacing = 1.5.sp
+                Row(verticalAlignment = Alignment.CenterVertically) {
+                    Box(
+                        modifier = Modifier
+                            .size(width = 3.dp, height = 14.dp)
+                            .background(PortalRedLightning, RoundedCornerShape(2.dp))
                     )
-                )
+                    Spacer(modifier = Modifier.width(8.dp))
+                    Text(
+                        text = "TABLE OF CONTENTS",
+                        style = MaterialTheme.typography.labelMedium.copy(
+                            color = Color.White,
+                            fontWeight = FontWeight.Bold,
+                            letterSpacing = 1.5.sp
+                        )
+                    )
+                }
 
                 Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                     // Bookmark Filter Toggle
                     IconButton(
                         onClick = onToggleBookmarkFilter,
-                        modifier = Modifier.size(36.dp).testTag("filter_bookmark_button")
+                        modifier = Modifier
+                            .size(36.dp)
+                            .clip(RoundedCornerShape(10.dp))
+                            .background(if (filterBookmarked) PortalGold.copy(alpha = 0.15f) else VoidSurfaceVariant)
+                            .border(1.dp, if (filterBookmarked) PortalGold else VoidBorder, RoundedCornerShape(10.dp))
+                            .testTag("filter_bookmark_button")
                     ) {
                         Icon(
                             imageVector = if (filterBookmarked) Icons.Default.Bookmark else Icons.Default.BookmarkBorder,
                             contentDescription = "Filter Bookmarks",
-                            tint = if (filterBookmarked) PortalGold else Color.Gray,
-                            modifier = Modifier.size(20.dp)
+                            tint = if (filterBookmarked) PortalGold else Color(0xFF94A3B8),
+                            modifier = Modifier.size(18.dp)
                         )
                     }
 
                     // Sort Order Toggle
                     IconButton(
                         onClick = onToggleSortOrder,
-                        modifier = Modifier.size(36.dp).testTag("sort_order_button")
+                        modifier = Modifier
+                            .size(36.dp)
+                            .clip(RoundedCornerShape(10.dp))
+                            .background(VoidSurfaceVariant)
+                            .border(1.dp, VoidBorder, RoundedCornerShape(10.dp))
+                            .testTag("sort_order_button")
                     ) {
                         Icon(
                             imageVector = Icons.Default.Sort,
                             contentDescription = "Sort Order",
-                            tint = if (sortAscending) PortalCyan else PortalPurple,
-                            modifier = Modifier.size(20.dp)
+                            tint = if (sortAscending) PortalRedLightning else PortalCrimson,
+                            modifier = Modifier.size(18.dp)
                         )
                     }
                 }
@@ -1114,23 +1159,23 @@ private fun ChaptersTabContent(
             OutlinedTextField(
                 value = searchQuery,
                 onValueChange = onSearchQueryChange,
-                placeholder = { Text("Search chapters or keywords...", color = Color.Gray, fontSize = 13.sp) },
+                placeholder = { Text("Search chapters or keywords...", color = Color(0xFF64748B), fontSize = 13.sp) },
                 leadingIcon = {
                     Icon(
                         imageVector = Icons.Default.Search,
                         contentDescription = null,
-                        tint = Color.Gray,
+                        tint = Color(0xFF94A3B8),
                         modifier = Modifier.size(18.dp)
                     )
                 },
                 singleLine = true,
                 colors = OutlinedTextFieldDefaults.colors(
-                    focusedBorderColor = PortalCyan,
+                    focusedBorderColor = PortalRedLightning,
                     unfocusedBorderColor = VoidBorder,
                     focusedTextColor = Color.White,
                     unfocusedTextColor = Color.White,
-                    focusedContainerColor = VoidCard.copy(alpha = 0.5f),
-                    unfocusedContainerColor = VoidCard.copy(alpha = 0.5f)
+                    focusedContainerColor = VoidCard.copy(alpha = 0.7f),
+                    unfocusedContainerColor = VoidCard.copy(alpha = 0.7f)
                 ),
                 shape = RoundedCornerShape(14.dp),
                 modifier = Modifier
@@ -1158,7 +1203,7 @@ private fun ChaptersTabContent(
                         } else {
                             "No chapters published yet. Stay tuned for Author Arun's upcoming chapters!"
                         },
-                        color = Color.Gray,
+                        color = Color(0xFF94A3B8),
                         style = MaterialTheme.typography.bodyMedium,
                         textAlign = TextAlign.Center,
                         modifier = Modifier.padding(horizontal = 24.dp)
@@ -1233,7 +1278,7 @@ private fun LibraryTabContent(
                     Icon(
                         imageVector = if (currentUserId.isNotBlank()) Icons.Default.CloudDone else Icons.Default.CloudQueue,
                         contentDescription = null,
-                        tint = if (currentUserId.isNotBlank()) PortalCyan else Color.Gray,
+                        tint = if (currentUserId.isNotBlank()) PortalRedLightning else Color(0xFF94A3B8),
                         modifier = Modifier.size(18.dp)
                     )
                     Spacer(modifier = Modifier.width(10.dp))
@@ -1244,14 +1289,14 @@ private fun LibraryTabContent(
                         )
                         Text(
                             text = if (currentUserId.isNotBlank()) "Account: $currentUserId" else "Tap to backup reading progress & bookmarks",
-                            style = MaterialTheme.typography.bodySmall.copy(color = Color.Gray, fontSize = 11.sp)
+                            style = MaterialTheme.typography.bodySmall.copy(color = Color(0xFF94A3B8), fontSize = 11.sp)
                         )
                     }
                 }
                 Icon(
                     imageVector = Icons.Default.Sync,
                     contentDescription = null,
-                    tint = PortalCyan,
+                    tint = PortalRedLightning,
                     modifier = Modifier.size(16.dp)
                 )
             }
@@ -1263,12 +1308,12 @@ private fun LibraryTabContent(
         TabRow(
             selectedTabIndex = currentSubTab.ordinal,
             containerColor = Color.Transparent,
-            contentColor = PortalCyan,
+            contentColor = PortalRedLightning,
             divider = {},
             indicator = { tabPositions ->
                 TabRowDefaults.SecondaryIndicator(
                     modifier = Modifier.tabIndicatorOffset(tabPositions[currentSubTab.ordinal]),
-                    color = PortalCyan
+                    color = PortalRedLightning
                 )
             }
         ) {
@@ -1286,7 +1331,7 @@ private fun LibraryTabContent(
                     text = {
                         Text(
                             text = title,
-                            color = if (isSelected) PortalCyan else Color.Gray,
+                            color = if (isSelected) PortalRedLightning else Color(0xFF94A3B8),
                             fontWeight = if (isSelected) FontWeight.Bold else FontWeight.Normal,
                             fontSize = 13.sp
                         )
@@ -1315,7 +1360,7 @@ private fun LibraryTabContent(
                             LibrarySubTab.ALL -> Icons.Default.CollectionsBookmark
                         },
                         contentDescription = null,
-                        tint = Color.Gray,
+                        tint = Color(0xFF64748B),
                         modifier = Modifier.size(48.dp)
                     )
                     Spacer(modifier = Modifier.height(12.dp))
@@ -1326,7 +1371,7 @@ private fun LibraryTabContent(
                             LibrarySubTab.HISTORY -> "No reading history recorded.\nDive into Chapter 1 to start tracking your journey!"
                             LibrarySubTab.ALL -> "Your library is empty."
                         },
-                        color = Color.LightGray,
+                        color = Color(0xFFCBD5E1),
                         style = MaterialTheme.typography.bodyMedium,
                         textAlign = TextAlign.Center
                     )
@@ -1390,7 +1435,7 @@ fun ChapterListItemCard(
                     .background(VoidSurfaceVariant)
                     .border(
                         1.dp,
-                        if (chapter.isRead) PortalCyan.copy(alpha = 0.4f) else VoidBorder,
+                        if (chapter.isRead) PortalRedLightning.copy(alpha = 0.6f) else if (chapter.readProgress > 0f) PortalCrimson.copy(alpha = 0.5f) else VoidBorder,
                         RoundedCornerShape(12.dp)
                     ),
                 contentAlignment = Alignment.Center
@@ -1399,14 +1444,14 @@ fun ChapterListItemCard(
                     Icon(
                         imageVector = Icons.Default.CheckCircle,
                         contentDescription = "Read",
-                        tint = PortalCyan,
+                        tint = PortalRedLightning,
                         modifier = Modifier.size(20.dp)
                     )
                 } else {
                     Text(
                         text = if (chapter.chapterNumber == 0) "P" else "#${chapter.chapterNumber}",
                         style = MaterialTheme.typography.titleMedium.copy(
-                            color = PortalCyan,
+                            color = if (chapter.readProgress > 0f) PortalRedLightning else Color(0xFFE2E8F0),
                             fontWeight = FontWeight.Bold
                         )
                     )
@@ -1432,7 +1477,7 @@ fun ChapterListItemCard(
                     Text(
                         text = chapter.synopsis,
                         style = MaterialTheme.typography.bodySmall.copy(
-                            color = Color.LightGray,
+                            color = Color(0xFF94A3B8),
                             fontSize = 12.sp
                         ),
                         maxLines = 1,
@@ -1448,18 +1493,18 @@ fun ChapterListItemCard(
                 ) {
                     Text(
                         text = "${chapter.wordCount} words",
-                        style = MaterialTheme.typography.labelSmall.copy(color = Color.Gray)
+                        style = MaterialTheme.typography.labelSmall.copy(color = Color(0xFF64748B))
                     )
                     Text(text = "•", color = Color.DarkGray)
                     Text(
                         text = "~$estimatedMinutes min",
-                        style = MaterialTheme.typography.labelSmall.copy(color = PortalSky)
+                        style = MaterialTheme.typography.labelSmall.copy(color = Color(0xFF94A3B8))
                     )
                     if (chapter.readProgress > 0f && !chapter.isRead) {
                         Text(text = "•", color = Color.DarkGray)
                         Text(
                             text = "${(chapter.readProgress * 100).toInt()}% read",
-                            style = MaterialTheme.typography.labelSmall.copy(color = PortalGold)
+                            style = MaterialTheme.typography.labelSmall.copy(color = PortalRedLightning, fontWeight = FontWeight.SemiBold)
                         )
                     }
                 }
@@ -1475,7 +1520,7 @@ fun ChapterListItemCard(
                         Icon(
                             imageVector = Icons.Default.Edit,
                             contentDescription = "Edit Chapter",
-                            tint = PortalCyan,
+                            tint = PortalRedLightning,
                             modifier = Modifier.size(18.dp)
                         )
                     }
@@ -1500,7 +1545,7 @@ fun ChapterListItemCard(
                         Icon(
                             imageVector = if (chapter.isFavorite) Icons.Default.Favorite else Icons.Default.FavoriteBorder,
                             contentDescription = "Favorite",
-                            tint = if (chapter.isFavorite) Color(0xFFFF2A55) else Color.Gray,
+                            tint = if (chapter.isFavorite) Color(0xFFFF2348) else Color(0xFF64748B),
                             modifier = Modifier.size(18.dp)
                         )
                     }
@@ -1511,7 +1556,7 @@ fun ChapterListItemCard(
                         Icon(
                             imageVector = if (chapter.isBookmarked) Icons.Default.Bookmark else Icons.Default.BookmarkBorder,
                             contentDescription = "Bookmark",
-                            tint = if (chapter.isBookmarked) PortalGold else Color.Gray,
+                            tint = if (chapter.isBookmarked) PortalGold else Color(0xFF64748B),
                             modifier = Modifier.size(18.dp)
                         )
                     }
@@ -1550,7 +1595,7 @@ fun CloudSyncDialog(
                 Icon(
                     imageVector = Icons.Default.CloudSync,
                     contentDescription = null,
-                    tint = PortalCyan,
+                    tint = PortalRedLightning,
                     modifier = Modifier.size(24.dp)
                 )
                 Spacer(modifier = Modifier.width(10.dp))
@@ -1574,9 +1619,10 @@ fun CloudSyncDialog(
                     Box(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .neomorphic(
+                            .glassmorphic(
                                 shape = RoundedCornerShape(14.dp),
-                                surfaceColor = VoidCard
+                                backgroundColor = VoidCard.copy(alpha = 0.85f),
+                                borderColor = PortalRedLightning.copy(alpha = 0.4f)
                             )
                             .padding(14.dp)
                     ) {
@@ -1586,13 +1632,13 @@ fun CloudSyncDialog(
                                     modifier = Modifier
                                         .size(36.dp)
                                         .clip(CircleShape)
-                                        .background(PortalCyan.copy(alpha = 0.2f)),
+                                        .background(PortalRedLightning.copy(alpha = 0.2f)),
                                     contentAlignment = Alignment.Center
                                 ) {
                                     Icon(
                                         imageVector = Icons.Default.Person,
                                         contentDescription = null,
-                                        tint = PortalCyan,
+                                        tint = PortalRedLightning,
                                         modifier = Modifier.size(20.dp)
                                     )
                                 }
@@ -1610,9 +1656,9 @@ fun CloudSyncDialog(
                                         else
                                             "Cloud Synchronized",
                                         color = if (authUserState.email.trim().equals("divakaryased123@gmail.com", ignoreCase = true))
-                                            PortalCyan
+                                            PortalRedLightning
                                         else
-                                            PortalSky,
+                                            Color(0xFFFF6B81),
                                         fontWeight = if (authUserState.email.trim().equals("divakaryased123@gmail.com", ignoreCase = true))
                                             FontWeight.Bold
                                         else
@@ -1646,18 +1692,18 @@ fun CloudSyncDialog(
 
                     if (infoMessage != null) {
                         Spacer(modifier = Modifier.height(8.dp))
-                        Text(text = infoMessage!!, color = PortalCyan, fontSize = 12.sp)
+                        Text(text = infoMessage!!, color = PortalRedLightning, fontSize = 12.sp)
                     }
                 } else {
                     // Tab Selector: Sign In vs Create Account
                     TabRow(
                         selectedTabIndex = selectedAuthMode,
                         containerColor = VoidCard,
-                        contentColor = PortalCyan,
+                        contentColor = PortalRedLightning,
                         indicator = { tabPositions ->
                             TabRowDefaults.SecondaryIndicator(
                                 Modifier.tabIndicatorOffset(tabPositions[selectedAuthMode]),
-                                color = PortalCyan
+                                color = PortalRedLightning
                             )
                         },
                         modifier = Modifier
@@ -1709,12 +1755,12 @@ fun CloudSyncDialog(
                         },
                         label = { Text("Email Address", color = Color.Gray, fontSize = 12.sp) },
                         leadingIcon = {
-                            Icon(Icons.Default.Email, contentDescription = null, tint = PortalCyan, modifier = Modifier.size(18.dp))
+                            Icon(Icons.Default.Email, contentDescription = null, tint = PortalRedLightning, modifier = Modifier.size(18.dp))
                         },
                         singleLine = true,
                         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
                         colors = OutlinedTextFieldDefaults.colors(
-                            focusedBorderColor = PortalCyan,
+                            focusedBorderColor = PortalRedLightning,
                             unfocusedBorderColor = VoidBorder,
                             focusedTextColor = Color.White,
                             unfocusedTextColor = Color.White
@@ -1733,7 +1779,7 @@ fun CloudSyncDialog(
                         },
                         label = { Text("Password", color = Color.Gray, fontSize = 12.sp) },
                         leadingIcon = {
-                            Icon(Icons.Default.Lock, contentDescription = null, tint = PortalCyan, modifier = Modifier.size(18.dp))
+                            Icon(Icons.Default.Lock, contentDescription = null, tint = PortalRedLightning, modifier = Modifier.size(18.dp))
                         },
                         trailingIcon = {
                             IconButton(onClick = { showPassword = !showPassword }) {
@@ -1749,7 +1795,7 @@ fun CloudSyncDialog(
                         visualTransformation = if (showPassword) VisualTransformation.None else PasswordVisualTransformation(),
                         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
                         colors = OutlinedTextFieldDefaults.colors(
-                            focusedBorderColor = PortalCyan,
+                            focusedBorderColor = PortalRedLightning,
                             unfocusedBorderColor = VoidBorder,
                             focusedTextColor = Color.White,
                             unfocusedTextColor = Color.White
@@ -1768,13 +1814,13 @@ fun CloudSyncDialog(
                             },
                             label = { Text("Confirm Password", color = Color.Gray, fontSize = 12.sp) },
                             leadingIcon = {
-                                Icon(Icons.Default.Lock, contentDescription = null, tint = PortalCyan, modifier = Modifier.size(18.dp))
+                                Icon(Icons.Default.Lock, contentDescription = null, tint = PortalRedLightning, modifier = Modifier.size(18.dp))
                             },
                             singleLine = true,
                             visualTransformation = if (showPassword) VisualTransformation.None else PasswordVisualTransformation(),
                             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
                             colors = OutlinedTextFieldDefaults.colors(
-                                focusedBorderColor = PortalCyan,
+                                focusedBorderColor = PortalRedLightning,
                                 unfocusedBorderColor = VoidBorder,
                                 focusedTextColor = Color.White,
                                 unfocusedTextColor = Color.White
@@ -1805,7 +1851,7 @@ fun CloudSyncDialog(
                                     }
                                 }
                             ) {
-                                Text("Forgot password?", color = PortalSky, fontSize = 11.sp)
+                                Text("Forgot password?", color = PortalRedLightning, fontSize = 11.sp)
                             }
                         }
                     }
@@ -1826,7 +1872,7 @@ fun CloudSyncDialog(
                         Spacer(modifier = Modifier.height(6.dp))
                         Text(
                             text = infoMessage!!,
-                            color = PortalCyan,
+                            color = PortalRedLightning,
                             fontSize = 11.sp,
                             fontWeight = FontWeight.Medium
                         )
@@ -1840,13 +1886,13 @@ fun CloudSyncDialog(
                     onClick = onSyncNow,
                     enabled = !isSyncing,
                     colors = ButtonDefaults.buttonColors(
-                        containerColor = PortalCyan,
-                        contentColor = VoidDark
+                        containerColor = PortalRedLightning,
+                        contentColor = Color.White
                     ),
                     modifier = Modifier.testTag("cloud_sync_now_button")
                 ) {
                     if (isSyncing) {
-                        CircularProgressIndicator(modifier = Modifier.size(16.dp), color = VoidDark, strokeWidth = 2.dp)
+                        CircularProgressIndicator(modifier = Modifier.size(16.dp), color = Color.White, strokeWidth = 2.dp)
                         Spacer(modifier = Modifier.width(6.dp))
                     } else {
                         Icon(imageVector = Icons.Default.Sync, contentDescription = null, modifier = Modifier.size(16.dp))
@@ -1898,13 +1944,13 @@ fun CloudSyncDialog(
                     },
                     enabled = !isSyncing,
                     colors = ButtonDefaults.buttonColors(
-                        containerColor = PortalCyan,
-                        contentColor = VoidDark
+                        containerColor = PortalRedLightning,
+                        contentColor = Color.White
                     ),
                     modifier = Modifier.testTag("auth_submit_button")
                 ) {
                     if (isSyncing) {
-                        CircularProgressIndicator(modifier = Modifier.size(16.dp), color = VoidDark, strokeWidth = 2.dp)
+                        CircularProgressIndicator(modifier = Modifier.size(16.dp), color = Color.White, strokeWidth = 2.dp)
                         Spacer(modifier = Modifier.width(6.dp))
                     }
                     Text(

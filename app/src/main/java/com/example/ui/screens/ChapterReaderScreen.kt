@@ -77,10 +77,9 @@ import androidx.compose.ui.unit.sp
 import com.example.data.local.ChapterEntity
 import com.example.data.local.ReadingSettingsEntity
 import com.example.ui.components.availableThemes
-import com.example.ui.theme.PortalCyan
+import com.example.ui.theme.PortalCrimson
 import com.example.ui.theme.PortalGold
-import com.example.ui.theme.PortalPurple
-import com.example.ui.theme.PortalSky
+import com.example.ui.theme.PortalRedLightning
 import com.example.ui.theme.ReaderThemes
 import com.example.ui.theme.VoidBorder
 import com.example.ui.theme.VoidCard
@@ -215,7 +214,7 @@ fun ChapterReaderScreen(
                 drawCircle(
                     brush = Brush.radialGradient(
                         colors = listOf(
-                            (if (isLight) theme.accentColor else PortalPurple).copy(alpha = if (isLight) 0.05f else 0.12f),
+                            (if (isLight) theme.accentColor else PortalCrimson).copy(alpha = if (isLight) 0.05f else 0.12f),
                             Color.Transparent
                         ),
                         center = Offset(w * 0.15f, h * 0.70f),
@@ -529,7 +528,7 @@ fun ChapterReaderScreen(
                                         onClick = onNextChapter,
                                         colors = ButtonDefaults.buttonColors(
                                             containerColor = theme.accentColor,
-                                            contentColor = if (isLight) Color.White else VoidDark
+                                            contentColor = Color.White
                                         ),
                                         shape = RoundedCornerShape(14.dp)
                                     ) {

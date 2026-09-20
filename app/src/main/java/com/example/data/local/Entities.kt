@@ -28,7 +28,7 @@ data class ChapterEntity(
 data class ReadingSettingsEntity(
     @PrimaryKey
     val id: Int = 1,
-    val themeId: String = "MIDNIGHT_NEBULA", // DARK_VOID, MIDNIGHT_NEBULA, SEPIA_PARCHMENT, CYBER_MINT, SOLAR_LIGHT
+    val themeId: String = "CRIMSON_RIFT", // CRIMSON_RIFT, DARK_VOID, MIDNIGHT_NEBULA, SEPIA_PARCHMENT, CYBER_MINT, SOLAR_LIGHT
     val fontSizeSp: Float = 17f,
     val lineSpacingMultiplier: Float = 1.6f,
     val fontFamilyType: String = "SERIF", // SERIF, SANS, MONOSPACE
