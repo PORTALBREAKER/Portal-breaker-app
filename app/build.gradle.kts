@@ -56,7 +56,14 @@ android {
     compose = true
     buildConfig = true
   }
-  testOptions { unitTests { isIncludeAndroidResources = true } }
+  testOptions {
+    unitTests {
+      isIncludeAndroidResources = true
+      all {
+        it.jvmArgs("-Xmx2g")
+      }
+    }
+  }
   dependenciesInfo {
     includeInApk = false
     includeInBundle = true
