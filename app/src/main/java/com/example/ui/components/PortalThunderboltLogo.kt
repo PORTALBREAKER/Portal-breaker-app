@@ -50,8 +50,9 @@ import com.example.ui.theme.VoidCard
 import com.example.ui.theme.VoidDark
 
 /**
- * Premium iOS-grade "P" with integrated electric Red Lightning (⚡) Logo & Dimensional Rift.
- * Red Lightning Edition: Designed with geometric precision, frosted obsidian glass, and crimson plasma glow.
+ * Custom Portal Breaker "PB" Monogram Logo with integrated Red Lightning & Dimensional Rift.
+ * Inspired by the metallic chiseled PB emblem: interlocking P & B, brushed titanium facets,
+ * circular electric crimson portal ring, surface fracture cracks, and a high-voltage lightning rift.
  */
 @Composable
 fun PortalThunderboltLogo(
@@ -116,12 +117,12 @@ fun PortalThunderboltLogo(
             val w = this.size.width
             val h = this.size.height
 
-            // Ambient electric aura - Red Lightning
+            // 1. Ambient Electric Crimson Aura in background
             drawCircle(
                 brush = Brush.radialGradient(
                     colors = listOf(
-                        PortalRedLightning.copy(alpha = 0.35f * pulse),
-                        PortalCrimson.copy(alpha = 0.15f * pulse),
+                        PortalRedLightning.copy(alpha = 0.40f * pulse),
+                        PortalCrimson.copy(alpha = 0.18f * pulse),
                         Color.Transparent
                     ),
                     center = Offset(w * 0.5f, h * 0.5f),
@@ -129,115 +130,295 @@ fun PortalThunderboltLogo(
                 )
             )
 
-            // Outer dimensional rift arc ring
+            // 2. Circular Red Lightning Ring / Portal Aura (Centered at 0.5, 0.5 with radius 0.42*w)
+            val ringRadius = w * 0.40f
+            // Wide outer red glow
+            drawCircle(
+                color = PortalRedLightning.copy(alpha = 0.25f * pulse),
+                radius = ringRadius,
+                center = Offset(w * 0.5f, h * 0.5f),
+                style = Stroke(width = 4.dp.toPx(), cap = StrokeCap.Round)
+            )
+            // Medium sharp red ring
+            drawCircle(
+                color = PortalRedLightning.copy(alpha = 0.75f * pulse),
+                radius = ringRadius,
+                center = Offset(w * 0.5f, h * 0.5f),
+                style = Stroke(width = 1.8.dp.toPx(), cap = StrokeCap.Round)
+            )
+            // Inner hot core arc
             drawArc(
-                color = PortalRedLightning.copy(alpha = 0.35f),
-                startAngle = 30f,
-                sweepAngle = 260f,
+                color = Color(0xFFFF5271),
+                startAngle = -60f,
+                sweepAngle = 280f,
                 useCenter = false,
-                topLeft = Offset(w * 0.08f, h * 0.08f),
-                size = Size(w * 0.84f, h * 0.84f),
+                topLeft = Offset(w * 0.5f - ringRadius, h * 0.5f - ringRadius),
+                size = Size(ringRadius * 2f, ringRadius * 2f),
+                style = Stroke(width = 0.8.dp.toPx(), cap = StrokeCap.Round)
+            )
+
+            // Radiating electric lightning tendrils from the circle
+            val tendril1 = Path().apply {
+                moveTo(w * 0.78f, h * 0.28f)
+                lineTo(w * 0.88f, h * 0.20f)
+                lineTo(w * 0.84f, h * 0.16f)
+                lineTo(w * 0.94f, h * 0.10f)
+            }
+            drawPath(
+                path = tendril1,
+                color = PortalRedLightning.copy(alpha = 0.8f * pulse),
                 style = Stroke(width = 1.dp.toPx(), cap = StrokeCap.Round)
             )
 
-            // 1. Stylized Geometric Letter "P" Path with Chamfered Precision
-            val pPath = Path().apply {
-                // Vertical stem of "P"
-                addRoundRect(
-                    RoundRect(
-                        left = w * 0.22f,
-                        top = h * 0.18f,
-                        right = w * 0.36f,
-                        bottom = h * 0.82f,
-                        cornerRadius = CornerRadius(w * 0.04f, w * 0.04f)
-                    )
-                )
-                // Upper Loop of "P"
-                moveTo(w * 0.34f, h * 0.18f)
-                lineTo(w * 0.60f, h * 0.18f)
-                cubicTo(
-                    w * 0.79f, h * 0.18f,
-                    w * 0.79f, h * 0.52f,
-                    w * 0.60f, h * 0.52f
-                )
-                lineTo(w * 0.34f, h * 0.52f)
+            val tendril2 = Path().apply {
+                moveTo(w * 0.24f, h * 0.74f)
+                lineTo(w * 0.14f, h * 0.82f)
+                lineTo(w * 0.18f, h * 0.86f)
+                lineTo(w * 0.08f, h * 0.92f)
+            }
+            drawPath(
+                path = tendril2,
+                color = PortalRedLightning.copy(alpha = 0.8f * pulse),
+                style = Stroke(width = 1.dp.toPx(), cap = StrokeCap.Round)
+            )
+
+            // 3. The Intertwined "B" Monogram (Lower Right / Underlayer)
+            // Base shadow & gunmetal backplate
+            val bBasePath = Path().apply {
+                moveTo(w * 0.44f, h * 0.28f)
+                lineTo(w * 0.65f, h * 0.28f)
+                cubicTo(w * 0.76f, h * 0.28f, w * 0.80f, h * 0.38f, w * 0.75f, h * 0.47f)
+                cubicTo(w * 0.82f, h * 0.52f, w * 0.83f, h * 0.65f, w * 0.76f, h * 0.74f)
+                cubicTo(w * 0.70f, h * 0.79f, w * 0.62f, h * 0.80f, w * 0.44f, h * 0.80f)
+                lineTo(w * 0.40f, h * 0.73f)
+                lineTo(w * 0.54f, h * 0.73f)
+                cubicTo(w * 0.63f, h * 0.73f, w * 0.68f, h * 0.69f, w * 0.67f, h * 0.60f)
+                cubicTo(w * 0.66f, h * 0.52f, w * 0.59f, h * 0.49f, w * 0.50f, h * 0.49f)
+                lineTo(w * 0.44f, h * 0.49f)
                 close()
             }
-
-            // Draw "P" body with platinum metallic gradient
             drawPath(
-                path = pPath,
-                brush = Brush.verticalGradient(
-                    listOf(
-                        Color.White,
-                        Color(0xFFE2E8F0),
-                        Color(0xFF94A3B8)
-                    )
+                path = bBasePath,
+                brush = Brush.linearGradient(
+                    listOf(Color(0xFF334155), Color(0xFF1E293B), Color(0xFF0F172A)),
+                    start = Offset(w * 0.44f, h * 0.28f),
+                    end = Offset(w * 0.80f, h * 0.80f)
                 ),
                 style = Fill
             )
 
-            // Inner negative space cutout of the P loop
-            val pInnerHole = Path().apply {
-                moveTo(w * 0.36f, h * 0.28f)
-                lineTo(w * 0.55f, h * 0.28f)
-                cubicTo(
-                    w * 0.66f, h * 0.28f,
-                    w * 0.66f, h * 0.42f,
-                    w * 0.55f, h * 0.42f
-                )
-                lineTo(w * 0.36f, h * 0.42f)
+            // "B" Upper Loop Highlight (Metallic Titanium)
+            val bUpperHighlight = Path().apply {
+                moveTo(w * 0.48f, h * 0.32f)
+                lineTo(w * 0.63f, h * 0.32f)
+                cubicTo(w * 0.72f, h * 0.32f, w * 0.74f, h * 0.38f, w * 0.71f, h * 0.44f)
+                cubicTo(w * 0.67f, h * 0.47f, w * 0.60f, h * 0.47f, w * 0.52f, h * 0.47f)
+                lineTo(w * 0.48f, h * 0.47f)
                 close()
             }
             drawPath(
-                path = pInnerHole,
-                color = Color(0xFF0C0407),
+                path = bUpperHighlight,
+                brush = Brush.linearGradient(
+                    listOf(Color(0xFFE2E8F0), Color(0xFF94A3B8), Color(0xFF475569)),
+                    start = Offset(w * 0.48f, h * 0.32f),
+                    end = Offset(w * 0.72f, h * 0.47f)
+                ),
                 style = Fill
             )
 
-            // 2. High-Voltage Red Thunderbolt (⚡) slicing diagonally through P
-            val boltGlowPath = Path().apply {
-                moveTo(w * 0.68f, h * 0.12f)  // Top lightning apex
-                lineTo(w * 0.44f, h * 0.46f)  // Inward strike
-                lineTo(w * 0.58f, h * 0.46f)  // Step outward
-                lineTo(w * 0.36f, h * 0.88f)  // Bottom lightning spear
-                lineTo(w * 0.52f, h * 0.52f)  // Step return
-                lineTo(w * 0.40f, h * 0.52f)  // Inward step
+            // "B" Lower Loop Highlight (Metallic Chiseled Bevel)
+            val bLowerHighlight = Path().apply {
+                moveTo(w * 0.50f, h * 0.52f)
+                lineTo(w * 0.62f, h * 0.52f)
+                cubicTo(w * 0.70f, h * 0.52f, w * 0.73f, h * 0.57f, w * 0.72f, h * 0.64f)
+                cubicTo(w * 0.70f, h * 0.72f, w * 0.64f, h * 0.75f, w * 0.54f, h * 0.75f)
+                lineTo(w * 0.46f, h * 0.75f)
+                lineTo(w * 0.50f, h * 0.68f)
+                lineTo(w * 0.56f, h * 0.68f)
+                cubicTo(w * 0.62f, h * 0.68f, w * 0.64f, h * 0.63f, w * 0.63f, h * 0.59f)
+                cubicTo(w * 0.62f, h * 0.55f, w * 0.58f, h * 0.53f, w * 0.52f, h * 0.53f)
+                close()
+            }
+            drawPath(
+                path = bLowerHighlight,
+                brush = Brush.linearGradient(
+                    listOf(Color(0xFFCBD5E1), Color(0xFF64748B), Color(0xFF334155)),
+                    start = Offset(w * 0.46f, h * 0.52f),
+                    end = Offset(w * 0.73f, h * 0.75f)
+                ),
+                style = Fill
+            )
+
+            // "B" Inner Holes
+            val bHole1 = Path().apply {
+                moveTo(w * 0.52f, h * 0.36f)
+                lineTo(w * 0.61f, h * 0.36f)
+                cubicTo(w * 0.65f, h * 0.36f, w * 0.65f, h * 0.41f, w * 0.61f, h * 0.41f)
+                lineTo(w * 0.52f, h * 0.41f)
+                close()
+            }
+            drawPath(path = bHole1, color = Color(0xFF0A0407), style = Fill)
+
+            val bHole2 = Path().apply {
+                moveTo(w * 0.51f, h * 0.57f)
+                lineTo(w * 0.61f, h * 0.57f)
+                cubicTo(w * 0.65f, h * 0.57f, w * 0.65f, h * 0.66f, w * 0.61f, h * 0.66f)
+                lineTo(w * 0.51f, h * 0.66f)
+                close()
+            }
+            drawPath(path = bHole2, color = Color(0xFF0A0407), style = Fill)
+
+            // 4. The Intertwined "P" Monogram (Upper Left / Foreground)
+            // "P" Outer Bevel & Chiseled Shading
+            val pOuterPath = Path().apply {
+                moveTo(w * 0.22f, h * 0.22f) // Gothic flared top-left tip
+                lineTo(w * 0.36f, h * 0.26f)
+                lineTo(w * 0.36f, h * 0.45f)
+                lineTo(w * 0.48f, h * 0.45f)
+                cubicTo(w * 0.62f, h * 0.45f, w * 0.64f, h * 0.26f, w * 0.48f, h * 0.26f)
+                lineTo(w * 0.36f, h * 0.26f)
+                lineTo(w * 0.36f, h * 0.22f)
+                lineTo(w * 0.50f, h * 0.22f)
+                cubicTo(w * 0.68f, h * 0.22f, w * 0.70f, h * 0.50f, w * 0.50f, h * 0.50f)
+                lineTo(w * 0.36f, h * 0.50f)
+                lineTo(w * 0.36f, h * 0.72f)
+                lineTo(w * 0.29f, h * 0.80f) // Sharp dagger blade tip
+                lineTo(w * 0.29f, h * 0.48f)
+                lineTo(w * 0.22f, h * 0.48f)
+                close()
+            }
+            drawPath(
+                path = pOuterPath,
+                brush = Brush.linearGradient(
+                    listOf(Color(0xFF64748B), Color(0xFF334155), Color(0xFF1E293B)),
+                    start = Offset(w * 0.22f, h * 0.22f),
+                    end = Offset(w * 0.68f, h * 0.80f)
+                ),
+                style = Fill
+            )
+
+            // "P" Facing Platinum Highlight (Brushed Metallic Titanium)
+            val pFacePath = Path().apply {
+                moveTo(w * 0.24f, h * 0.24f)
+                lineTo(w * 0.48f, h * 0.24f)
+                cubicTo(w * 0.63f, h * 0.24f, w * 0.64f, h * 0.45f, w * 0.48f, h * 0.45f)
+                lineTo(w * 0.35f, h * 0.45f)
+                lineTo(w * 0.35f, h * 0.72f)
+                lineTo(w * 0.30f, h * 0.77f)
+                lineTo(w * 0.30f, h * 0.45f)
+                lineTo(w * 0.24f, h * 0.45f)
+                close()
+            }
+            drawPath(
+                path = pFacePath,
+                brush = Brush.verticalGradient(
+                    listOf(
+                        Color.White,
+                        Color(0xFFE2E8F0),
+                        Color(0xFF94A3B8),
+                        Color(0xFF64748B)
+                    ),
+                    startY = h * 0.22f,
+                    endY = h * 0.77f
+                ),
+                style = Fill
+            )
+
+            // "P" Gothic Flare Serif at Top Left
+            val pSerif = Path().apply {
+                moveTo(w * 0.22f, h * 0.22f)
+                lineTo(w * 0.32f, h * 0.26f)
+                lineTo(w * 0.32f, h * 0.34f)
+                lineTo(w * 0.26f, h * 0.28f)
+                close()
+            }
+            drawPath(path = pSerif, color = Color(0xFFF8FAFC), style = Fill)
+
+            // "P" Inner Negative Cutout
+            val pHole = Path().apply {
+                moveTo(w * 0.36f, h * 0.28f)
+                lineTo(w * 0.47f, h * 0.28f)
+                cubicTo(w * 0.56f, h * 0.28f, w * 0.56f, h * 0.40f, w * 0.47f, h * 0.40f)
+                lineTo(w * 0.36f, h * 0.40f)
+                close()
+            }
+            drawPath(path = pHole, color = Color(0xFF090407), style = Fill)
+
+            // 5. Chiseled Fissures / Surface Cracks across the Metal Face
+            val crack1 = Path().apply {
+                moveTo(w * 0.43f, h * 0.24f)
+                lineTo(w * 0.40f, h * 0.31f)
+                lineTo(w * 0.46f, h * 0.36f)
+            }
+            drawPath(
+                path = crack1,
+                color = PortalRedLightning.copy(alpha = 0.85f * pulse),
+                style = Stroke(width = 0.9.dp.toPx(), cap = StrokeCap.Round)
+            )
+
+            val crack2 = Path().apply {
+                moveTo(w * 0.60f, h * 0.48f)
+                lineTo(w * 0.56f, h * 0.56f)
+                lineTo(w * 0.63f, h * 0.61f)
+            }
+            drawPath(
+                path = crack2,
+                color = PortalRedLightning.copy(alpha = 0.85f * pulse),
+                style = Stroke(width = 0.9.dp.toPx(), cap = StrokeCap.Round)
+            )
+
+            // 6. High-Voltage Crimson Lightning Strike (⚡) Slicing Through Center Rift
+            val boltPath = Path().apply {
+                moveTo(w * 0.72f, h * 0.16f) // Top apex
+                lineTo(w * 0.56f, h * 0.38f) // First fracture
+                lineTo(w * 0.63f, h * 0.38f) // Step
+                lineTo(w * 0.44f, h * 0.65f) // Deep fracture
+                lineTo(w * 0.52f, h * 0.65f) // Step
+                lineTo(w * 0.34f, h * 0.88f) // Exit spark
+                lineTo(w * 0.42f, h * 0.70f)
+                lineTo(w * 0.36f, h * 0.70f)
+                lineTo(w * 0.52f, h * 0.45f)
+                lineTo(w * 0.45f, h * 0.45f)
                 close()
             }
 
-            // Thunderbolt outer neon plasma stroke
+            // Outer Crimson Plasma Glow on Bolt
             drawPath(
-                path = boltGlowPath,
-                color = PortalRedLightning.copy(alpha = 0.85f * pulse),
+                path = boltPath,
+                color = PortalRedLightning.copy(alpha = 0.9f * pulse),
                 style = Stroke(
-                    width = 2.5.dp.toPx(),
+                    width = 3.dp.toPx(),
                     cap = StrokeCap.Round,
                     join = StrokeJoin.Round
                 )
             )
 
-            // Thunderbolt core fill (Electric Red Core with White-Hot Accent)
+            // Core Lightning Bolt (Electric Red with White-Hot Accent)
             drawPath(
-                path = boltGlowPath,
+                path = boltPath,
                 brush = Brush.linearGradient(
                     listOf(
                         Color.White,
-                        Color(0xFFFF7A8F),
+                        Color(0xFFFFA3B5),
                         PortalRedLightning,
                         PortalCrimson
                     ),
-                    start = Offset(w * 0.68f, h * 0.12f),
-                    end = Offset(w * 0.36f, h * 0.88f)
+                    start = Offset(w * 0.72f, h * 0.16f),
+                    end = Offset(w * 0.34f, h * 0.88f)
                 ),
                 style = Fill
             )
 
-            // Micro energetic spark
+            // High-voltage center energy sparks
+            drawCircle(
+                color = Color.White.copy(alpha = 0.95f * pulse),
+                radius = 1.5.dp.toPx(),
+                center = Offset(w * 0.44f, h * 0.65f)
+            )
             drawCircle(
                 color = Color.White.copy(alpha = 0.9f * pulse),
                 radius = 1.2.dp.toPx(),
-                center = Offset(w * 0.36f, h * 0.88f)
+                center = Offset(w * 0.56f, h * 0.38f)
             )
         }
     }

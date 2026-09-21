@@ -1,27 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <vector xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:aapt="http://schemas.android.com/aapt"
-    android:width="108dp"
-    android:height="108dp"
+    android:width="128dp"
+    android:height="128dp"
     android:viewportWidth="108"
     android:viewportHeight="108">
 
+    <!-- Dark Obsidian Background Plate -->
+    <path
+        android:pathData="M12,12 h84 a8,8 0 0,1 8,8 v68 a8,8 0 0,1 -8,8 h-84 a8,8 0 0,1 -8,-8 v-68 a8,8 0 0,1 8,-8 z"
+        android:fillColor="#090508" />
+
     <!-- 1. Glowing Crimson Red Energy Ring & Circular Portal Frame (Centered at 54,54) -->
-    <!-- Wide outer red glow -->
     <path
         android:pathData="M54,54m-27,0a27,27 0 1,1 54,0a27,27 0 1,1 -54,0"
         android:strokeWidth="5"
         android:strokeColor="#30FF183D"
         android:fillColor="#00000000" />
 
-    <!-- Medium red lightning aura -->
     <path
         android:pathData="M54,54m-27,0a27,27 0 1,1 54,0a27,27 0 1,1 -54,0"
         android:strokeWidth="2.5"
         android:strokeColor="#80FF2348"
         android:fillColor="#00000000" />
 
-    <!-- Sharp circular energy ring -->
     <path
         android:pathData="M54,54m-27,0a27,27 0 1,1 54,0a27,27 0 1,1 -54,0"
         android:strokeWidth="1.2"
@@ -29,7 +31,6 @@
         android:fillColor="#00000000" />
 
     <!-- 2. Electric Tendrils & Lightning Arcs radiating from ring -->
-    <!-- Top-Right electrical burst -->
     <path
         android:pathData="M73,36 L79,30 L84,32 L89,25"
         android:strokeWidth="1.0"
@@ -43,7 +44,6 @@
         android:strokeLineCap="round"
         android:fillColor="#00000000" />
 
-    <!-- Bottom-Left electrical burst -->
     <path
         android:pathData="M35,72 L29,78 L23,76 L18,83"
         android:strokeWidth="1.0"
@@ -57,22 +57,8 @@
         android:strokeLineCap="round"
         android:fillColor="#00000000" />
 
-    <!-- Top-Left & Bottom-Right minor sparks -->
-    <path
-        android:pathData="M36,36 L30,31 L26,33"
-        android:strokeWidth="0.8"
-        android:strokeColor="#FF2348"
-        android:strokeLineCap="round"
-        android:fillColor="#00000000" />
-    <path
-        android:pathData="M72,72 L78,77 L83,75"
-        android:strokeWidth="0.8"
-        android:strokeColor="#FF2348"
-        android:strokeLineCap="round"
-        android:fillColor="#00000000" />
-
     <!-- 3. Interlocked 3D Metallic Monogram "PB" -->
-    <!-- Letter "B" (Lower / Right Base) - Dark Metallic Underlayer & Bevel -->
+    <!-- Letter "B" (Lower / Right Base) - Dark Metallic Underlayer -->
     <path
         android:pathData="M49,36 L64,36 C71,36 74,42 71,48 C76,51 77,59 72,66 C68,71 62,72 49,72 L47,67 L57,67 C63,67 66,64 65,58 C64,53 60,51 54,51 L48,51 Z"
         android:strokeWidth="0.8"
@@ -91,7 +77,7 @@
         </aapt:attr>
     </path>
 
-    <!-- Letter "B" Upper Facet Highlight (Metallic Titanium) -->
+    <!-- Letter "B" Upper Facet Highlight -->
     <path
         android:pathData="M52,38 L63,38 C68,38 70,41 68,45 C65,47 61,48 55,48 L52,48 Z">
         <aapt:attr name="android:fillColor">
@@ -108,7 +94,7 @@
         </aapt:attr>
     </path>
 
-    <!-- Letter "B" Lower Facet Highlight (Metallic Titanium with chiseled edge) -->
+    <!-- Letter "B" Lower Facet Highlight -->
     <path
         android:pathData="M54,52 L62,52 C67,52 70,55 69,60 C68,65 64,68 56,68 L50,68 Z">
         <aapt:attr name="android:fillColor">
@@ -125,15 +111,15 @@
         </aapt:attr>
     </path>
 
-    <!-- Letter "B" Inner Negative Cutouts -->
+    <!-- Letter "B" Inner Holes -->
     <path
         android:pathData="M54,41 L61,41 C64,41 64,44 61,44 L54,44 Z"
-        android:fillColor="#090B10" />
+        android:fillColor="#090508" />
     <path
         android:pathData="M53,56 L61,56 C64,56 64,63 61,63 L53,63 Z"
-        android:fillColor="#090B10" />
+        android:fillColor="#090508" />
 
-    <!-- Letter "P" (Upper / Left Body) - Metallic Chiseled Facets -->
+    <!-- Letter "P" (Upper / Left Body) -->
     <!-- "P" Outer Bevel & Shading -->
     <path
         android:pathData="M31,31 L44,34 L44,48 L53,48 C63,48 65,34 54,34 L44,34 L44,31 L54,31 C67,31 69,51 54,51 L44,51 L44,67 L38,73 L37,51 L31,51 Z"
@@ -153,7 +139,7 @@
         </aapt:attr>
     </path>
 
-    <!-- "P" Upper Facing Silver Highlight (Brushed Metallic Sheen) -->
+    <!-- "P" Upper Facing Silver Highlight -->
     <path
         android:pathData="M32,32 L53,32 C64,32 65,47 54,47 L43,47 L43,67 L38,71 L38,47 L32,47 Z">
         <aapt:attr name="android:fillColor">
@@ -176,7 +162,7 @@
         android:pathData="M31,31 L38,34 L38,40 L34,36 Z"
         android:fillColor="#F1F5F9" />
 
-    <!-- "P" Downward Chiseled Blade Point at Bottom -->
+    <!-- "P" Downward Blade Point at Bottom -->
     <path
         android:pathData="M38,67 L43,67 L38,73 Z"
         android:fillColor="#94A3B8" />
@@ -184,22 +170,19 @@
     <!-- "P" Inner Negative Cutout -->
     <path
         android:pathData="M44,36 L52,36 C59,36 59,43 52,43 L44,43 Z"
-        android:fillColor="#090B10" />
+        android:fillColor="#090508" />
 
     <!-- 4. Chiseled Fissures / Surface Cracks across the Metal -->
-    <!-- Crack on P loop -->
     <path
         android:pathData="M49,32 L47,38 L51,41"
         android:strokeWidth="0.7"
         android:strokeColor="#FF2348"
         android:fillColor="#00000000" />
-    <!-- Crack on P stem -->
     <path
         android:pathData="M38,43 L42,47 L39,52"
         android:strokeWidth="0.7"
         android:strokeColor="#FF2348"
         android:fillColor="#00000000" />
-    <!-- Crack on B loop -->
     <path
         android:pathData="M64,52 L61,58 L66,62"
         android:strokeWidth="0.7"
@@ -207,7 +190,6 @@
         android:fillColor="#00000000" />
 
     <!-- 5. Jagged Crimson Lightning Strike Cutting Diagonally Through PB (⚡) -->
-    <!-- Outer Crimson Plasma Glow -->
     <path
         android:pathData="M68,23 L57,41 L63,41 L47,65 L54,65 L41,83 L46,68 L41,68 L53,46 L47,46 Z"
         android:strokeWidth="3.0"
@@ -216,7 +198,6 @@
         android:strokeLineCap="round"
         android:fillColor="#00000000" />
 
-    <!-- Core Lightning Bolt (Electric Red with White-Hot Accent) -->
     <path
         android:pathData="M68,23 L57,41 L63,41 L47,65 L54,65 L41,83 L46,68 L41,68 L53,46 L47,46 Z"
         android:strokeWidth="0.6"
@@ -244,5 +225,3 @@
         android:strokeLineCap="round" />
 
 </vector>
-
-
