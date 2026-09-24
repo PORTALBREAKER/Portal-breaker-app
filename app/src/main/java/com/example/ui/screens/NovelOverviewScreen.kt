@@ -47,7 +47,9 @@ import androidx.compose.material.icons.filled.CloudQueue
 import androidx.compose.material.icons.filled.CloudSync
 import androidx.compose.material.icons.filled.CollectionsBookmark
 import androidx.compose.material.icons.filled.Delete
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.material.icons.filled.Edit
+import androidx.compose.material.icons.filled.EditNote
 import androidx.compose.material.icons.filled.Email
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.FavoriteBorder
@@ -55,12 +57,14 @@ import androidx.compose.material.icons.filled.FilterList
 import androidx.compose.material.icons.filled.History
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Info
+import androidx.compose.material.icons.filled.Key
 import androidx.compose.material.icons.filled.Lock
 import androidx.compose.material.icons.filled.LockOpen
 import androidx.compose.material.icons.filled.MenuBook
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.PlayArrow
 import androidx.compose.material.icons.filled.Search
+import androidx.compose.material.icons.filled.Shield
 import androidx.compose.material.icons.filled.Sort
 import androidx.compose.material.icons.filled.Sync
 import androidx.compose.material.icons.filled.TextFields
@@ -233,11 +237,42 @@ fun NovelOverviewScreen(
                         )
                     }
 
-                    // Action Icons (Cloud Sync + Reading Settings) with polished glass containers
+                    // Action Icons (Author Sanctuary + Cloud Sync + Reading Settings) with polished glass containers
                     Row(
                         verticalAlignment = Alignment.CenterVertically,
                         horizontalArrangement = Arrangement.spacedBy(4.dp)
                     ) {
+                        // Author Sanctuary / Console Button
+                        IconButton(
+                            onClick = {
+                                if (isAuthorMode) {
+                                    onOpenInscribeNew()
+                                } else {
+                                    onSecretTrickTriggered()
+                                }
+                            },
+                            modifier = Modifier
+                                .size(if (isCompact) 38.dp else 42.dp)
+                                .clip(RoundedCornerShape(12.dp))
+                                .background(
+                                    if (isAuthorMode) PortalRedLightning.copy(alpha = 0.25f)
+                                    else VoidSurfaceVariant.copy(alpha = 0.7f)
+                                )
+                                .border(
+                                    1.dp,
+                                    if (isAuthorMode) PortalRedLightning else VoidBorder,
+                                    RoundedCornerShape(12.dp)
+                                )
+                                .testTag("author_console_button")
+                        ) {
+                            Icon(
+                                imageVector = if (isAuthorMode) Icons.Default.EditNote else Icons.Default.Key,
+                                contentDescription = if (isAuthorMode) "Inscribe Chapter" else "Author Sanctuary",
+                                tint = if (isAuthorMode) PortalRedLightning else Color(0xFFFBBF24),
+                                modifier = Modifier.size(if (isCompact) 18.dp else 20.dp)
+                            )
+                        }
+
                         // Cloud Sync Account Button
                         IconButton(
                             onClick = { showCloudDialog = true },
@@ -478,7 +513,8 @@ fun NovelOverviewScreen(
                             isAuthorMode = isAuthorMode,
                             onOpenInscribeNew = onOpenInscribeNew,
                             onOpenChapter = onOpenChapter,
-                            onSwitchToChapters = { onSelectTab(AppTab.CHAPTERS) }
+                            onSwitchToChapters = { onSelectTab(AppTab.CHAPTERS) },
+                            onSecretTrickTriggered = onSecretTrickTriggered
                         )
                     }
 
@@ -671,7 +707,8 @@ private fun HomeTabContent(
     isAuthorMode: Boolean,
     onOpenInscribeNew: () -> Unit,
     onOpenChapter: (Long) -> Unit,
-    onSwitchToChapters: () -> Unit
+    onSwitchToChapters: () -> Unit,
+    onSecretTrickTriggered: () -> Unit
 ) {
     val totalWords = remember(allChapters) { allChapters.sumOf { it.wordCount } }
     val completedCount = remember(allChapters) { allChapters.count { it.isRead } }
@@ -737,6 +774,53 @@ private fun HomeTabContent(
                                     fontWeight = FontWeight.Bold
                                 )
                             )
+                            Spacer(modifier = Modifier.width(8.dp))
+                            if (isAuthorMode) {
+                                Box(
+                                    modifier = Modifier
+                                        .clip(RoundedCornerShape(6.dp))
+                                        .background(PortalRedLightning.copy(alpha = 0.2f))
+                                        .border(0.5.dp, PortalRedLightning, RoundedCornerShape(6.dp))
+                                        .padding(horizontal = 6.dp, vertical = 2.dp)
+                                ) {
+                                    Text(
+                                        text = "SANCTUARY ACTIVE",
+                                        style = MaterialTheme.typography.labelSmall.copy(
+                                            color = PortalRedLightning,
+                                            fontSize = 9.sp,
+                                            fontWeight = FontWeight.Black
+                                        )
+                                    )
+                                }
+                            } else {
+                                Box(
+                                    modifier = Modifier
+                                        .clip(RoundedCornerShape(6.dp))
+                                        .background(VoidSurfaceVariant)
+                                        .border(0.5.dp, PortalGold.copy(alpha = 0.5f), RoundedCornerShape(6.dp))
+                                        .clickable { onSecretTrickTriggered() }
+                                        .padding(horizontal = 6.dp, vertical = 2.dp)
+                                        .testTag("author_status_badge")
+                                ) {
+                                    Row(verticalAlignment = Alignment.CenterVertically) {
+                                        Icon(
+                                            imageVector = Icons.Default.Lock,
+                                            contentDescription = "Author Sanctuary",
+                                            tint = PortalGold,
+                                            modifier = Modifier.size(10.dp)
+                                        )
+                                        Spacer(modifier = Modifier.width(3.dp))
+                                        Text(
+                                            text = "Author Login",
+                                            style = MaterialTheme.typography.labelSmall.copy(
+                                                color = PortalGold,
+                                                fontSize = 9.sp,
+                                                fontWeight = FontWeight.Bold
+                                            )
+                                        )
+                                    }
+                                }
+                            }
                         }
 
                         Spacer(modifier = Modifier.height(6.dp))
@@ -878,6 +962,26 @@ private fun HomeTabContent(
                                 )
                                 Spacer(modifier = Modifier.width(6.dp))
                                 Text("Inscribe Chapter 1", fontWeight = FontWeight.Bold, fontSize = 13.sp)
+                            }
+                        } else {
+                            Spacer(modifier = Modifier.height(12.dp))
+                            OutlinedButton(
+                                onClick = onSecretTrickTriggered,
+                                colors = ButtonDefaults.outlinedButtonColors(
+                                    contentColor = PortalGold
+                                ),
+                                border = BorderStroke(1.dp, PortalGold.copy(alpha = 0.6f)),
+                                shape = RoundedCornerShape(12.dp),
+                                modifier = Modifier.testTag("empty_home_author_unlock_button")
+                            ) {
+                                Icon(
+                                    imageVector = Icons.Default.Key,
+                                    contentDescription = null,
+                                    modifier = Modifier.size(14.dp),
+                                    tint = PortalGold
+                                )
+                                Spacer(modifier = Modifier.width(6.dp))
+                                Text("Author Arun? Unlock Author Sanctuary", fontWeight = FontWeight.Bold, fontSize = 12.sp)
                             }
                         }
                     }
@@ -1853,6 +1957,47 @@ fun CloudSyncDialog(
                             ) {
                                 Text("Forgot password?", color = PortalRedLightning, fontSize = 11.sp)
                             }
+                        }
+                    }
+
+                    // Author Quick Login Shortcut
+                    if (!isLoggedIn) {
+                        OutlinedButton(
+                            onClick = {
+                                emailInput = "divakaryased123@gmail.com"
+                                passwordInput = "6767"
+                                onSignIn("divakaryased123@gmail.com", "6767") { success, err ->
+                                    if (success) {
+                                        infoMessage = "Signed in as Author Arun! Sanctuary unlocked."
+                                        errorMessage = null
+                                    } else {
+                                        errorMessage = err ?: "Sign in failed."
+                                    }
+                                }
+                            },
+                            colors = ButtonDefaults.outlinedButtonColors(
+                                contentColor = PortalGold
+                            ),
+                            border = BorderStroke(1.dp, PortalGold.copy(alpha = 0.5f)),
+                            shape = RoundedCornerShape(10.dp),
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(top = 4.dp)
+                                .testTag("author_quick_login_button")
+                        ) {
+                            Icon(
+                                imageVector = Icons.Default.Shield,
+                                contentDescription = null,
+                                tint = PortalGold,
+                                modifier = Modifier.size(14.dp)
+                            )
+                            Spacer(modifier = Modifier.width(6.dp))
+                            Text(
+                                text = "Sign in as Author Arun (6767)",
+                                color = PortalGold,
+                                fontSize = 11.sp,
+                                fontWeight = FontWeight.Bold
+                            )
                         }
                     }
 

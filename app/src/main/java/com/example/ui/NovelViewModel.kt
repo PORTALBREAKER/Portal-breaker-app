@@ -88,6 +88,7 @@ class NovelViewModel(application: Application) : AndroidViewModel(application) {
                     // Auto-activate Author Mode if logged into the Author's verified Gmail account
                     if (user.email.trim().equals(AUTHOR_EMAIL, ignoreCase = true)) {
                         _isAuthorModeActive.value = true
+                        prefs.edit().putBoolean("is_author_mode_active", true).apply()
                     }
                 } else {
                     _currentUserId.value = ""
@@ -115,8 +116,11 @@ class NovelViewModel(application: Application) : AndroidViewModel(application) {
     private val _selectedChapterId = MutableStateFlow<Long?>(null)
     val selectedChapterId: StateFlow<Long?> = _selectedChapterId.asStateFlow()
 
-    // Secret Author Mode State (Default FALSE so normal readers only see reading app)
-    private val _isAuthorModeActive = MutableStateFlow(false)
+    // Secret Author Mode State (Persisted in prefs)
+    private val _isAuthorModeActive = MutableStateFlow(
+        prefs.getBoolean("is_author_mode_active", false) ||
+        authService.currentUserState.value.email.trim().equals(AUTHOR_EMAIL, ignoreCase = true)
+    )
     val isAuthorModeActive: StateFlow<Boolean> = _isAuthorModeActive.asStateFlow()
 
     private val _showSecretDialog = MutableStateFlow(false)
@@ -381,6 +385,8 @@ class NovelViewModel(application: Application) : AndroidViewModel(application) {
         val isCorrect = isAuthorEmailMatch || isPasscodeMatch
         if (isCorrect) {
             _isAuthorModeActive.value = true
+            prefs.edit().putBoolean("is_author_mode_active", true).apply()
+            authService.setAuthorSession()
             _showSecretDialog.value = false
         }
         return isCorrect
@@ -388,6 +394,7 @@ class NovelViewModel(application: Application) : AndroidViewModel(application) {
 
     fun exitAuthorMode() {
         _isAuthorModeActive.value = false
+        prefs.edit().putBoolean("is_author_mode_active", false).apply()
     }
 
     fun openInscribeNewChapter() {

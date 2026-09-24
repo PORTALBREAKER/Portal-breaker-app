@@ -75,6 +75,13 @@ class NovelRepository(
         if (settingsDao.getSettings().firstOrNull() == null) {
             settingsDao.saveSettings(ReadingSettingsEntity())
         }
+        val existingChapters = chapterDao.getAllChapters().firstOrNull()
+        if (existingChapters.isNullOrEmpty() && com.example.data.local.DefaultChapters.canonChapters.isNotEmpty()) {
+            for (chapter in com.example.data.local.DefaultChapters.canonChapters) {
+                chapterDao.insertChapter(chapter)
+            }
+            Log.d("NovelRepository", "Seeded ${com.example.data.local.DefaultChapters.canonChapters.size} canon chapters for Portal Breaker.")
+        }
     }
 
     suspend fun insertChapter(
